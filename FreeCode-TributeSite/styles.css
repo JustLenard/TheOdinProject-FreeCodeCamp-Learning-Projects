@@ -1,0 +1,40 @@
+body{
+    background-color: white;
+    text-align: center;
+
+}
+
+main{
+    background-color: grey;
+    border-radius: 8px;
+}
+
+h1{
+    color: red;
+}
+
+#img-div{
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 40px;
+    margin-inline-end: 40px;
+    background-color: white;
+    padding: 10px;
+}
+
+#image{
+    background-color: white;
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
+#img-caption{
+    margin: 15px 0 5px 0;
+}
+
+a{
+    display: block;
+}
