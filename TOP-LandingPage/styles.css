@@ -7,13 +7,19 @@ header{
     background-color: #1F2937;
     justify-content: space-around;
     align-items: center;
+    padding-top: 20px;
+    color: #F9FAF8;
+}
+
+.header-logo{
+    font-size: 24px;
 }
 
 .nav-links{
     display: flex;
     justify-content: space-around;
     list-style-type: none;
-    color: red;
+    color: #F9FAF8;
     width: 35vw;
 }
 
@@ -21,6 +27,7 @@ header{
     display: flex;
     justify-content: center;
     background-color: #1F2937;
+    padding: 30px;
 }
 
 #hero{
@@ -29,6 +36,16 @@ header{
     justify-content: center;
     padding: 30px;
     gap: 20px;
+}
+
+#hero-text{
+    font-size: 48px;
+    color: #F9FAF8;
+    font-weight: bolder;
+}
+
+#hero p{
+    color: #F9FAF8;
 }
 
 .hero-left, .hero-right{
@@ -51,4 +68,90 @@ header{
 
 .sign-up-btn{
     background-color: #3882F6;
+    width: 100px;
+    height: 30px;
+    color: white;
+    border-radius: 8px;
+    border: 0;
+}
+
+.info-title{
+    text-align: center;
+    padding: 30px;
+    font-size: 46px;
+    margin-top: 50px;
+}
+
+#img-section{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.img-wrapper{
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    border: 2px solid #3882F6;
+}
+
+.img-and-subtext{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.img-and-subtext p{
+    width: 150px;
+}
+
+.quote-wrapper{
+    display: flex;
+    background-color: #E5E7EB;
+    flex-direction: column;
+    padding: 50px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.quote{
+    width: 80vw;
+    font-size: 36px;
+    color: #1F2937;
+    font-style: italic;
+    align-self: center;
+    
+}
+
+.quote-author{
+    align-self: flex-end;
+    justify-self: flex-end;
+    font-weight: bolder;
+    font-size: 20px;
+    margin-right: 20%;
+}
+
+#call-to-action{
+    margin: 0 auto 100px auto;
+    display: flex;
+    width: 70vw;
+    height: 100px;
+    justify-content: center;
+    gap: 50px;
+    border-radius: 10px;
+    background-color: #3882F6;
+    place-items: center;
+    line-height: 20px;
+}
+
+#call-to-action .sign-up-btn{
+    border: 1.5px solid white;
+}
+
+footer{
+    width: 70vw;
+    background-color: #1F2937;
+    margin: 0 auto;
+    padding: 30px 0 ;
+    text-align: center; 
 }
