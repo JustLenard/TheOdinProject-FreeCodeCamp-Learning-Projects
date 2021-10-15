@@ -1,0 +1,30 @@
+body{
+    background-color: gray;
+    width: 500px;
+    margin: auto;
+}
+
+#name-label{
+    display: block;
+    text-align: left;
+}
+
+.container{
+    width: 100%;
+    margin: 3.125rem auto 0 auto;
+}
+
+#survey-form{
+    background-color: lightblue;
+    padding: 3.125rem;
+}
+
+.radio{
+    display: flex;
+    flex-direction: column;
+}
+
+.checkbox{
+    display: flex;
+    flex-direction: column;
+}
