@@ -73,6 +73,7 @@ header{
     color: white;
     border-radius: 8px;
     border: 0;
+    margin-top: 5px;
 }
 
 .info-title{
@@ -125,10 +126,10 @@ header{
 
 .quote-author{
     align-self: flex-end;
-    justify-self: flex-end;
     font-weight: bolder;
     font-size: 20px;
     margin-right: 20%;
+    padding-top: 1rem;
 }
 
 #call-to-action{
