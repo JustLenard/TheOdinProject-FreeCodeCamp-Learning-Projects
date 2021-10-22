@@ -1,4 +1,25 @@
-.nav{
+nav {
     display: flex;
     justify-content: space-between;
+}
+
+.navigate{
+    display: flex;
+    list-style-type: none;
+    justify-content: space-between;
+    width: 40vh;
+    margin-right: 10vh;
+}
+
+.hero{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.qualities{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
