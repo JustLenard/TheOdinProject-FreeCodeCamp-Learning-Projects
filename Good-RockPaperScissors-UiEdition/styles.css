@@ -1,0 +1,48 @@
+body{
+    background-color: gray;
+}
+
+.hat{
+    width: 90vw;
+    height: 20vh;
+    border: 3px solid black;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.human-logo{
+    margin: 3rem;
+    font-size: 10vh;
+}
+
+.score{
+    display: flex;
+    font-size: 3rem;
+    gap: 3rem;
+}
+
+.robot-logo{
+    margin: 3rem;
+    font-size: 10vh;
+}
+
+.main{
+    width: 90vw;
+    height: 70vh;
+    margin: 3% auto;
+    border: 2px solid black;
+    display: flex;
+    
+}
+
+.left-column{
+    width: 1fr;
+    border: 2px solid red;
+}
+
+.right-column{
+    width: 1fr;
+    border: 2px solid red;
+}
