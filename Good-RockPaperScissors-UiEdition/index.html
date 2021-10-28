@@ -7,7 +7,7 @@
     <title>Rock Paper Scissors</title>
     <link rel='stylesheet' type='text/css' href='styles.css'>
     <script src="https://kit.fontawesome.com/1534a0f303.js" crossorigin="anonymous"></script>
-    <script src='script.js'></script>
+    <script src='script.js' defer></script>
 </head>
 <body>
     <div class='hat'>
@@ -26,13 +26,13 @@
     <div class='main'>
         <div class='left-column'>
             <h3>Make your choice, human</h3>
-            <div class='hand-box'>
+            <div class='hand-box' id='paper'>
                 <i class="far fa-hand-paper"></i>
             </div>
-            <div class='hand-box'>
+            <div class='hand-box' id='rock'>
                 <i class="far fa-hand-rock"></i>
             </div>
-            <div class='hand-box'>
+            <div class='hand-box' id='scissors'>
                 <i class="far fa-hand-scissors"></i>
             </div>
         </div>
@@ -44,7 +44,9 @@
                 <h4>Human wins round</h4>
             </div>
             <div class='choices'>
-                <div class='human-choice'></div>
+                <div class='human-choice'>
+
+                </div>
                 <div class='vs'></div>
                 <div class='robot-choice'></div>
             </div>
@@ -54,5 +56,6 @@
             <p>Something with robot</p>
         </div>
     </div>
+    <button class='btn' id='btn'>Fuck</button>
 </body>
 </html>
