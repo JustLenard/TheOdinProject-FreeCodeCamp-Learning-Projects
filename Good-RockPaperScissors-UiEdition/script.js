@@ -1,16 +1,58 @@
-/*const paper = document.querySelector('#paper')
-
-paper.addEventListener('click', function (e) {
-    console.log(e);
-    paper.classList.add('click');
-});*/
+const choices = ['rock', 'paper', 'scissors']
+const win = ['rock-scissors', 'paper-rock', 'scissors-paper']
+const lose = ['scissors-rock', 'rock-paper', 'paper-scissors']
 
 const hands = document.querySelectorAll('.hand-box')
-const humanChoice = document.querySelector('.human-choice')
+const humanChoiceBox = document.querySelector('.human-choice')
+const robotChoiceBox = document.querySelector('.robot-choice')
+const figto = document.querySelector('#fighto');
 
-hands.forEach(hand => hand.addEventListener('click', function (e) {
+let robotChoice = choices[Math.floor(Math.random() * choices.length)]
+let robotPoints = humanPoints = 0;
+let score = document.querySelector('.score');
+var humanChoice;
+
+console.log(`Robot Choice ${robotChoice}`);
+robotChoiceBox.classList.add('far', 'hand-box', `fa-hand-${robotChoice}`);
+
+
+hands.forEach(hand => hand.addEventListener('click', ()  => {
     hands.forEach(nothand => nothand.classList.remove('click'));
-    console.log(e);
-    humanChoice.setAttribute('id', 'human-choice')
+//    humanChoiceBox.setAttribute('id', 'human-choice');
+//    const container = humanChoiceBox.createElement('i')
+//    container.classList.add('far fa-hand-paper')
+    humanChoice = hand.getAttribute('id');
+    console.log(`Inside Function ${humanChoice}`);
+    humanChoiceBox.classList.remove(`fa-hand-paper`, 'fa-hand-scissors', 'fa-hand-rock');
+    humanChoiceBox.classList.add('far', `fa-hand-${humanChoice}`, `hand-box`);
+    
     hand.classList.add('click');
 }));
+
+figto.addEventListener('click', () => {
+//    let humanChoice = document.querySelector('.human-choice').getAttribute('id');
+
+//    humanChoiceBox.classList.remove(`fa-hand-paper`, 'fa-hand-scissors', 'fa-hand-rock', 'hand-box');
+//    robotChoiceBox.classList.remove(`fa-hand-paper`, 'fa-hand-scissors', 'fa-hand-rock', 'hand-box')
+
+    console.log(humanChoice)
+
+    
+    if (humanChoice === robotChoice){
+        console.log(`Tie round. The score is ${humanPoints}:${robotPoints}`)
+    }
+    else if (win.includes(humanChoice + '-' + robotChoice)) {
+        humanPoints++;
+        console.log(`Human wins round. The score is ${humanPoints}:${robotPoints}`);
+    }
+    else if (lose.includes(humanChoice + '-' +  robotChoice)){
+        robotPoints++;
+        console.log(`Computer wins round. The score is ${humanPoints}:${robotPoints}`);
+    }
+    else {
+        console.log("Please type 'Rock', 'Paper', or 'Scissors'.");
+        
+    }
+
+    score.textContent = `${humanPoints} : ${robotPoints}`;
+})
