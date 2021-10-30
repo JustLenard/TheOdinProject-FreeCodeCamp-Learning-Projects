@@ -7,14 +7,9 @@ const humanChoiceBox = document.querySelector('.human-choice')
 const robotChoiceBox = document.querySelector('.robot-choice')
 const figto = document.querySelector('#fighto');
 
-let robotChoice = choices[Math.floor(Math.random() * choices.length)]
 let robotPoints = humanPoints = 0;
 let score = document.querySelector('.score');
 var humanChoice;
-
-console.log(`Robot Choice ${robotChoice}`);
-robotChoiceBox.classList.add('far', 'hand-box', `fa-hand-${robotChoice}`);
-
 
 hands.forEach(hand => hand.addEventListener('click', ()  => {
     hands.forEach(nothand => nothand.classList.remove('click'));
@@ -36,6 +31,10 @@ figto.addEventListener('click', () => {
 //    robotChoiceBox.classList.remove(`fa-hand-paper`, 'fa-hand-scissors', 'fa-hand-rock', 'hand-box')
 
     console.log(humanChoice)
+    let robotChoice = choices[Math.floor(Math.random() * choices.length)]
+    console.log(`Robot Choice ${robotChoice}`);
+    robotChoiceBox.classList.remove(`fa-hand-paper`, 'fa-hand-scissors', 'fa-hand-rock');
+    robotChoiceBox.classList.add('far', 'hand-box', `fa-hand-${robotChoice}`);
 
     
     if (humanChoice === robotChoice){
