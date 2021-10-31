@@ -6,18 +6,22 @@ const hands = document.querySelectorAll('.hand-box')
 const humanChoiceBox = document.querySelector('.human-choice')
 const robotChoiceBox = document.querySelector('.robot-choice')
 const figto = document.querySelector('#fighto');
+const roundWinner = document.querySelector('.round-winner')
+const endgameModal = document.querySelector('#modal')
+const overlay = document.querySelector('#overlay')
+const tryAgainBtn = document.querySelector('#try-again-btn')
+const score = document.querySelector('.score');
+const gameResults = document.querySelector('#game-results')
 
 let robotPoints = humanPoints = 0;
-let score = document.querySelector('.score');
+
 var humanChoice;
 
 hands.forEach(hand => hand.addEventListener('click', ()  => {
     hands.forEach(nothand => nothand.classList.remove('click'));
-//    humanChoiceBox.setAttribute('id', 'human-choice');
-//    const container = humanChoiceBox.createElement('i')
-//    container.classList.add('far fa-hand-paper')
+
     humanChoice = hand.getAttribute('id');
-    console.log(`Inside Function ${humanChoice}`);
+
     humanChoiceBox.classList.remove(`fa-hand-paper`, 'fa-hand-scissors', 'fa-hand-rock');
     humanChoiceBox.classList.add('far', `fa-hand-${humanChoice}`, `hand-box`);
     
@@ -25,33 +29,58 @@ hands.forEach(hand => hand.addEventListener('click', ()  => {
 }));
 
 figto.addEventListener('click', () => {
-//    let humanChoice = document.querySelector('.human-choice').getAttribute('id');
+    gameLogic();
+    score.textContent = `${humanPoints} : ${robotPoints}`;
 
-//    humanChoiceBox.classList.remove(`fa-hand-paper`, 'fa-hand-scissors', 'fa-hand-rock', 'hand-box');
-//    robotChoiceBox.classList.remove(`fa-hand-paper`, 'fa-hand-scissors', 'fa-hand-rock', 'hand-box')
+    if (humanPoints === 3 || robotPoints === 3) {
+        openEndgameModal();
+    };
+})
 
-    console.log(humanChoice)
-    let robotChoice = choices[Math.floor(Math.random() * choices.length)]
-    console.log(`Robot Choice ${robotChoice}`);
+tryAgainBtn.addEventListener('click', () => {
+    tryAgain();
+})
+
+function openEndgameModal() {
+    endgameModal.classList.add('active')
+    overlay.classList.add('active')
+    if (humanPoints > robotPoints){
+        gameResults.textContent = 'VICTORY!!!';
+    }
+    else{
+        gameResults.textContent = 'DEFEAT!!!';
+    }
+}
+
+function tryAgain() {
+    endgameModal.classList.remove('active')
+    overlay.classList.remove('active')
+    robotChoiceBox.classList.remove(`hand-box`, `fa-hand-paper`, 'fa-hand-scissors', 'fa-hand-rock');
+    humanChoiceBox.classList.remove(`hand-box`, `fa-hand-paper`, 'fa-hand-scissors', 'fa-hand-rock'); 
+    hands.forEach(hand => hand.classList.remove('click'));
+    humanPoints = robotPoints = 0;
+    humanChoice = undefined;
+    roundWinner.textContent = '';
+    score.textContent = `${humanPoints} : ${robotPoints}`;
+}
+
+function gameLogic() {
+    robotChoice = choices[Math.floor(Math.random() * choices.length)];
     robotChoiceBox.classList.remove(`fa-hand-paper`, 'fa-hand-scissors', 'fa-hand-rock');
     robotChoiceBox.classList.add('far', 'hand-box', `fa-hand-${robotChoice}`);
-
-    
-    if (humanChoice === robotChoice){
-        console.log(`Tie round. The score is ${humanPoints}:${robotPoints}`)
+    if (humanChoice === robotChoice) {
+        roundWinner.textContent = `Tie round.`;
     }
     else if (win.includes(humanChoice + '-' + robotChoice)) {
         humanPoints++;
-        console.log(`Human wins round. The score is ${humanPoints}:${robotPoints}`);
+        roundWinner.textContent = `Human wins round.`;
     }
-    else if (lose.includes(humanChoice + '-' +  robotChoice)){
+    else if (lose.includes(humanChoice + '-' +  robotChoice)) {
         robotPoints++;
-        console.log(`Computer wins round. The score is ${humanPoints}:${robotPoints}`);
+        roundWinner.textContent = `Computer wins round.`;
     }
     else {
-        console.log("Please type 'Rock', 'Paper', or 'Scissors'.");
-        
+        robotChoiceBox.classList.remove(`hand-box`, `fa-hand-paper`, 'fa-hand-scissors', 'fa-hand-rock');
+        roundWinner.textContent = 'Please make your choice.';
     }
-
-    score.textContent = `${humanPoints} : ${robotPoints}`;
-})
+}

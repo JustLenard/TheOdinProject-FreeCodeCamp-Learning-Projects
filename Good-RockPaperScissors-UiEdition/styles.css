@@ -47,8 +47,6 @@ body{
     padding: 1rem 0 4rem 0;
 }
 
-
-
 .hand-box{
     border: 1px solid red;
     padding: 20px;
@@ -58,6 +56,8 @@ body{
     transition: all 1s;
     font-size: 5rem;
 }
+
+
 
 .click{
     border: 2px solid red;
@@ -77,28 +77,46 @@ body{
 
 .choices{
     display: flex;
-    justify-content: space-around;    
+    justify-content: space-around;
+    align-items: center;    
 }
 
 
+
+.vs img{
+    object-fit: cover;
+    width: 6rem;
+}
+
+.round-winner{
+    text-align: center;
+    font-weight: bold;
+    font-size: 2rem;
+}
 
 .right-column{
     flex: 1;
     border: 2px solid red;
 }
 
-#modal{
+
+
+.modal{
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
     border: 1px solid black;
     border-radius: 10px;
-    z-index: 10;
+    z-index: 1;
     background-color: white;
     width: 500px;
     max-width: 80%;
     padding: 15px 15px;
+}
+
+.modal.active {
+    transform: translate(-50%, -50%) scale(1);
 }
 
 #overlay{
@@ -109,9 +127,10 @@ body{
     right: 0;
     opacity: 0;
     background-color: rgba(0, 0, 0, .5);
+    pointer-events: none;
 }
 
 #overlay.active {
     opacity: 1;
-    pointer-events: none;
+    pointer-events: all;
 }
