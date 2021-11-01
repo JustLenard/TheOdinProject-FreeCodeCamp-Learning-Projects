@@ -1,68 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock Paper Scissors</title>
-    <link rel='stylesheet' type='text/css' href='styles.css'>
-    <script src="https://kit.fontawesome.com/1534a0f303.js" crossorigin="anonymous"></script>
-    <script src='script.js' defer></script>
-</head>
-<body>
-    <div class='hat'>
-        <div class='human-logo'>
-            <i class="fas fa-user-alt"></i>
-        </div>
-        <div class='score'>
-            <p>0</p>
-            <p>:</p>
-            <p>0</p>
-        </div>
-        <div class='robot-logo'>
-            <i class="fas fa-robot"></i>
-        </div>
-    </div>
-    <div class='main'>
-        <div class='left-column'>
-            <h3>Make your choice, human</h3>
-            <div class='hand-box' id='paper'>
-                <i class="far fa-hand-paper"></i>
-            </div>
-            <div class='hand-box' id='rock'>
-                <i class="far fa-hand-rock"></i>
-            </div>
-            <div class='hand-box' id='scissors'>
-                <i class="far fa-hand-scissors"></i>
-            </div>
-        </div>
-        <div class='battleground'>
-            <div class='battleground-hat'>
-            <p>TO THE DEATH!</p>
-            </div>
-            <div class='round-winner'>
-                <h4>Human wins round</h4>
-            </div>
-            <div class='choices'>
-                <div class='human-choice'>
-
-                </div>
-                <div class='vs'>
-                    <img src='/images/vs.png' alt='vs'>
-                </div>
-                <div class='robot-choice'></div>
-            </div>
-            <button type='submit' id='fighto'>FIGTO</button>
-        </div>
-        <div class='right-column'>
-            <p>Something with robot</p>
-        </div>
-        <div class='modal' id='modal'>
-            <div id='game-results'>
-            </div>
-            <button id='try-again-btn'>Try Again</button>
-        </div>
-        <div id='overlay'></div>
-    </div>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Rock Paper Scissors</title>
+		<link rel="stylesheet" type="text/css" href="styles.css" />
+		<script
+			src="https://kit.fontawesome.com/1534a0f303.js"
+			crossorigin="anonymous"
+		></script>
+		<script src="script.js" defer></script>
+	</head>
+	<body>
+		<div class="hat">
+			<div class="human-logo">
+				<i class="fas fa-user-alt"></i>
+			</div>
+			<div class="score"></div>
+			<div class="robot-logo">
+				<i class="fas fa-robot"></i>
+			</div>
+		</div>
+		<div class="battleground-hat">
+			<div class="left">
+				<h3>Make your choice, human</h3>
+			</div>
+			<div class="middle"><h3>TO THE DEATH!</h3></div>
+			<div class="right">
+				<h3>Something with robot</h3>
+			</div>
+		</div>
+		<div class="main">
+			<div class="left-column">
+				<div class="hand-box" id="paper">
+					<i class="far fa-hand-paper"></i>
+				</div>
+				<div class="hand-box" id="rock">
+					<i class="far fa-hand-rock"></i>
+				</div>
+				<div class="hand-box" id="scissors">
+					<i class="far fa-hand-scissors"></i>
+				</div>
+			</div>
+			<div class="battleground">
+				<div class="round-winner">
+					<h4>Human wins round</h4>
+				</div>
+				<div class="choices">
+					<div class="human-choice"></div>
+					<div class="vs">
+						<img src="/images/vs.png" alt="vs" />
+					</div>
+					<div class="robot-choice"></div>
+				</div>
+				<button type="submit" id="fighto">FIGTO</button>
+			</div>
+			<div class="right-column"></div>
+			<div class="modal" id="modal">
+				<div id="game-results"></div>
+				<button id="try-again-btn">Try Again</button>
+			</div>
+			<div id="overlay"></div>
+		</div>
+	</body>
 </html>

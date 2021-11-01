@@ -1,136 +1,174 @@
-body{
-    background-color: gray;
+:root {
+	--background: linear-gradient(
+		100deg,
+		rgba(26, 27, 131, 1) 0%,
+		rgba(100, 21, 133, 0.7063200280112045) 50%,
+		rgba(172, 3, 37, 1) 100%
+	);
 }
 
-.hat{
-    width: 90vw;
-    height: 20vh;
-    border: 3px solid black;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+* {
+	box-sizing: border-box;
 }
 
-.human-logo{
-    margin: 3rem;
-    font-size: 10vh;
+body {
+	background: rgb(246, 159, 171);
+	background: linear-gradient(
+		218deg,
+		rgba(246, 159, 171, 1) 0%,
+		rgba(148, 187, 233, 1) 100%
+	);
+	margin: 0px;
+	box-sizing: border-box;
 }
 
-.score{
-    display: flex;
-    font-size: 3rem;
-    gap: 3rem;
+.hat {
+	width: 90vw;
+	height: 20vh;
+	border: 3px solid black;
+	margin: 10px auto;
+	border-radius: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: var(--background);
 }
 
-.robot-logo{
-    margin: 3rem;
-    font-size: 10vh;
+.human-logo {
+	margin: 3rem;
+	font-size: 10vh;
 }
 
-.main{
-    width: 90vw;
-    height: 70vh;
-    margin: 3% auto;
-    border: 2px solid black;
-    display: flex;
-    
+.score {
+	display: flex;
+	font-size: 3rem;
+	gap: 3rem;
 }
 
-.left-column{
-    border: 2px solid red;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 0 4rem 0;
+.robot-logo {
+	margin: 3rem;
+	font-size: 10vh;
 }
 
-.hand-box{
-    border: 1px solid red;
-    padding: 20px;
-    border-radius: 20px;
-    background-color: silver;
-    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-    transition: all 1s;
-    font-size: 5rem;
+.battleground-hat {
+	width: 90vw;
+	height: 5vh;
+	margin: 3% auto;
+	border: 2px solid black;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	overflow: hidden;
+	background: var(--background);
 }
 
-
-
-.click{
-    border: 2px solid red;
-    background-color: orange;
+.left {
+	flex: 1;
+	text-align: center;
+	color: var(--background);
 }
 
-.battleground{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    flex: 2;
+.middle {
+	flex: 2;
+	text-align: center;
 }
 
-.battleground-hat{
-    text-align: center;
+.right {
+	flex: 1;
+	text-align: center;
 }
 
-.choices{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;    
+.main {
+	width: 90vw;
+	height: 70vh;
+	margin: 3% auto;
+	border: 2px solid black;
+	display: flex;
 }
 
-
-
-.vs img{
-    object-fit: cover;
-    width: 6rem;
+.left-column {
+	border: 2px solid red;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
 }
 
-.round-winner{
-    text-align: center;
-    font-weight: bold;
-    font-size: 2rem;
+.hand-box {
+	border: 1px solid red;
+	padding: 20px;
+	border-radius: 20px;
+	background-color: silver;
+	box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+	transition: all 1s;
+	font-size: 5rem;
 }
 
-.right-column{
-    flex: 1;
-    border: 2px solid red;
+.click {
+	border: 2px solid red;
+	background-color: orange;
 }
 
+.battleground {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	flex: 2;
+}
 
+.choices {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
 
-.modal{
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    border: 1px solid black;
-    border-radius: 10px;
-    z-index: 1;
-    background-color: white;
-    width: 500px;
-    max-width: 80%;
-    padding: 15px 15px;
+.vs img {
+	object-fit: cover;
+	width: 6rem;
+}
+
+.round-winner {
+	text-align: center;
+	font-weight: bold;
+	font-size: 2rem;
+}
+
+.right-column {
+	flex: 1;
+	border: 2px solid red;
+}
+
+.modal {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) scale(0);
+	border: 1px solid black;
+	border-radius: 10px;
+	z-index: 1;
+	background-color: white;
+	width: 500px;
+	max-width: 80%;
+	padding: 15px 15px;
 }
 
 .modal.active {
-    transform: translate(-50%, -50%) scale(1);
+	transform: translate(-50%, -50%) scale(1);
 }
 
-#overlay{
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    opacity: 0;
-    background-color: rgba(0, 0, 0, .5);
-    pointer-events: none;
+#overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	opacity: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	pointer-events: none;
 }
 
 #overlay.active {
-    opacity: 1;
-    pointer-events: all;
+	opacity: 1;
+	pointer-events: all;
 }
