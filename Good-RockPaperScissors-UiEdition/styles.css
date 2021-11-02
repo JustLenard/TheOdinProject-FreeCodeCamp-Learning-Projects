@@ -12,11 +12,12 @@
 }
 
 body {
-	background: rgb(246, 159, 171);
+	background: rgb(58, 64, 180);
 	background: linear-gradient(
-		218deg,
-		rgba(246, 159, 171, 1) 0%,
-		rgba(148, 187, 233, 1) 100%
+		40deg,
+		rgba(58, 64, 180, 1) 0%,
+		rgba(252, 176, 69, 1) 50%,
+		rgba(253, 29, 29, 1) 100%
 	);
 	margin: 0px;
 	box-sizing: border-box;
@@ -32,6 +33,7 @@ body {
 	justify-content: space-between;
 	align-items: center;
 	background: var(--background);
+	box-shadow: 10px 10px 5px 0px rgb(0 0 0 / 40%);
 }
 
 .human-logo {
@@ -60,12 +62,12 @@ body {
 	justify-content: space-around;
 	overflow: hidden;
 	background: var(--background);
+	box-shadow: 10px 10px 5px 0px rgb(0 0 0 / 40%);
 }
 
 .left {
 	flex: 1;
 	text-align: center;
-	color: var(--background);
 }
 
 .middle {
@@ -82,45 +84,55 @@ body {
 	width: 90vw;
 	height: 70vh;
 	margin: 3% auto;
-	border: 2px solid black;
 	display: flex;
+	gap: 2rem;
 }
 
 .left-column {
-	border: 2px solid red;
 	flex: 1;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: space-around;
+	background: rgba(26, 27, 131, 0.4) 0%;
+	box-shadow: 10px 10px 5px 0px rgb(0 0 0 / 40%);
+	border-radius: 20px;
 }
 
 .hand-box {
-	border: 1px solid red;
-	padding: 20px;
+	padding: 1.25rem;
 	border-radius: 20px;
-	background-color: silver;
+	background-color: rgb(170, 191, 218);
 	box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 	transition: all 1s;
 	font-size: 5rem;
+	color: #318ce7;
+}
+
+.hand-box:hover {
+	cursor: pointer;
 }
 
 .click {
-	border: 2px solid red;
-	background-color: orange;
+	border: 1px solid rgb(223, 211, 211);
+	background-color: #7cb9e8;
+	color: rgb(194, 210, 221);
 }
 
 .battleground {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	justify-content: space-around;
 	flex: 2;
+	border-radius: 10px;
+	align-items: center;
 }
 
 .choices {
 	display: flex;
-	justify-content: space-around;
+	justify-content: center;
 	align-items: center;
+	gap: 10rem;
 }
 
 .vs img {
@@ -134,9 +146,23 @@ body {
 	font-size: 2rem;
 }
 
+#fighto {
+	padding: 10px 40px;
+	font-size: 1rem;
+	border: 2px solid black;
+	border-radius: 30px;
+	background: var(--background);
+}
+
+#fighto:hover {
+	cursor: pointer;
+}
+
 .right-column {
 	flex: 1;
-	border: 2px solid red;
+	background: rgba(172, 3, 37, 0.4) 100%;
+	border-radius: 20px;
+	box-shadow: 10px 10px 5px 0px rgb(0 0 0 / 40%);
 }
 
 .modal {
