@@ -4,10 +4,11 @@
 
 body {
 	background-color: gray;
+}
+nav {
 	margin: 0;
 	display: flex;
-	flex-direction: column;
-	justify-content: center;
+	justify-content: space-around;
 	align-items: center;
 }
 
@@ -21,9 +22,16 @@ body {
 .playing-field {
 	width: 80vw;
 	height: 70vh;
+	margin: 3rem auto;
 	background: silver;
 	display: flex;
 	flex-wrap: wrap;
+}
+
+.height,
+.width {
+	display: flex;
+	gap: 1rem;
 }
 
 .box {
