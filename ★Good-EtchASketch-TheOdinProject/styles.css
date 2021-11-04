@@ -12,11 +12,16 @@ nav {
 	align-items: center;
 }
 
-#reset-btn {
+.reset-btn {
+	background-color: red;
 	margin: 5rem 0;
 	padding: 20px;
 	border-radius: 50%;
 	box-shadow: none;
+}
+
+.reset-btn:hover {
+	filter: brightness(0.8);
 }
 
 .playing-field {
@@ -32,6 +37,7 @@ nav {
 .width {
 	display: flex;
 	gap: 1rem;
+	justify-content: space-between;
 }
 
 .box {

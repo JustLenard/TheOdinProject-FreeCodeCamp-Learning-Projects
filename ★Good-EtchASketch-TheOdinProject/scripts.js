@@ -1,59 +1,86 @@
-let rows = document.querySelector('.height-value').value;
-let columns = document.querySelector('.width-value').value;
+let rowsValue = document.querySelector('.height-value').value;
+let columnsValue = document.querySelector('.width-value').value;
 currentColor = '#000';
 
 const playingField = document.querySelector('.playing-field');
-const button = document.querySelector('.container');
 const reset = document.querySelector('.reset-btn');
 const penColor = document.querySelector('.pen-color');
+const pen = document.querySelector('.pen');
+const rainbow = document.querySelector('.rainbow');
+const fill = document.querySelector('.fill');
+const shadder = document.querySelector('.shadder');
+const rowsArea = document.querySelector('.height-value');
+const columnsArea = document.querySelector('.width-value');
+var boxes;
 
-rows.addEventListener('change', () => {
-	console.log('works');
-});
+// 'Tool' selection.
+[(pen, rainbow, fill, shadder)].forEach(tool =>
+	tool.addEventListener('click', () => {
+		[pen, rainbow, fill, shadder].forEach(tool => {
+			tool.classList.remove('active');
+		});
+		tool.classList.add('active');
+	})
+);
 
-rows.onchange = (e) => {
-	rows = e.target.value;
-	createDivs(rows, columns);
-	console.log(rows);
-};
+// Listens and recreates the 'playingField' based on the desired size
+[rowsArea, columnsArea].forEach(area =>
+	area.addEventListener('change', e => {
+		rowsValue = rowsArea.value;
+		columnsValue = columnsArea.value;
+		console.log(rowsValue);
+		console.log(columnsValue);
+		playingField.innerHTML = '';
+		createBoxes(rowsValue, columnsValue);
+		painting();
+	})
+);
 
 function setPenColor(newColor) {
 	currentColor = newColor;
 }
 
-penColor.onchange = (e) => setPenColor(e.target.value);
+penColor.onchange = e => setPenColor(e.target.value);
 
-function createDivs(rows, columns) {
+function createBoxes(rows, columns) {
 	for (let i = 1; i <= rows * columns; i++) {
-		console.log(i);
 		playingField.insertAdjacentHTML('beforeend', `<div class="box"></div>`);
 	}
+	const boxWidth = 100 / columnsValue;
+	const boxHeight = 100 / rowsValue;
+	boxes = document.querySelectorAll('.box');
+
+	boxes.forEach(box => {
+		box.style.width = `${boxWidth}%`;
+		box.style.height = `${boxHeight}%`;
+	});
 }
 
-createDivs(rows, columns);
-const boxes = document.querySelectorAll('.box');
+createBoxes(rowsValue, columnsValue);
+painting();
 
-const boxWidth = 100 / columns;
-const boxHeight = 100 / rows;
+function painting() {
+	boxes.forEach(box => {
+		box.addEventListener('mouseover', () => {
+			if (pen.classList.contains('active')) {
+				box.style.backgroundColor = `${currentColor}`;
+			} else if (rainbow.classList.contains('active')) {
+				box.style.backgroundColor = `rgb(${rn()},${rn()},${rn()})`;
+			} else if (fill.classList.contains('active')) {
+				playingField.style.backgroundColor = `${currentColor}`;
+			} else if (shadder.classList.contains('active')) {
+				style = window.getComputedStyle(box);
+				br = style.getPropertyValue('filter');
+				console.log(br);
+				console.log(typeof br);
 
-boxes.forEach((box) => {
-	box.style.width = `${boxWidth}%`;
-	box.style.height = `${boxHeight}%`;
-
-	// box.addEventListener('mouseover', () => {
-	// 	box.classList.add('color');
-	// });
-	box.addEventListener('mouseover', () => {
-		box.style.backgroundColor = `${currentColor}`;
+				box.style.filter = 'brightness(0.8)';
+			}
+		});
 	});
-	// box.addEventListener('mouseover', () => {
-	// 	box.style.backgroundColor = `rgb(${rn()},${rn()},${rn()})`;
-	// 	box.classList.add('color');
-	// });
-});
-
+}
 reset.addEventListener('click', () => {
-	boxes.forEach((box) => {
+	boxes.forEach(box => {
 		box.classList.remove('color');
 		box.style.backgroundColor = 'white';
 	});
