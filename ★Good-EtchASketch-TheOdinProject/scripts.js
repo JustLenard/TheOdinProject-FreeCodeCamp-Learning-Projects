@@ -1,6 +1,7 @@
 let rowsValue = document.querySelector('.height-value').value;
 let columnsValue = document.querySelector('.width-value').value;
 currentColor = '#000';
+var boxes;
 
 const playingField = document.querySelector('.playing-field');
 const reset = document.querySelector('.reset-btn');
@@ -11,10 +12,18 @@ const fill = document.querySelector('.fill');
 const shadder = document.querySelector('.shadder');
 const rowsArea = document.querySelector('.height-value');
 const columnsArea = document.querySelector('.width-value');
-var boxes;
+
+createBoxes(rowsValue, columnsValue);
+painting();
+penColor.onchange = e => setPenColor(e.target.value);
+
+// Handles pen color change.
+function setPenColor(newColor) {
+	currentColor = newColor;
+}
 
 // 'Tool' selection.
-[(pen, rainbow, fill, shadder)].forEach(tool =>
+[pen, rainbow, fill, shadder].forEach(tool =>
 	tool.addEventListener('click', () => {
 		[pen, rainbow, fill, shadder].forEach(tool => {
 			tool.classList.remove('active');
@@ -23,25 +32,18 @@ var boxes;
 	})
 );
 
-// Listens and recreates the 'playingField' based on the desired size
+// Listens and recreates the 'playingField' based on the desired size.
 [rowsArea, columnsArea].forEach(area =>
-	area.addEventListener('change', e => {
+	area.addEventListener('change', () => {
 		rowsValue = rowsArea.value;
 		columnsValue = columnsArea.value;
-		console.log(rowsValue);
-		console.log(columnsValue);
 		playingField.innerHTML = '';
 		createBoxes(rowsValue, columnsValue);
 		painting();
 	})
 );
 
-function setPenColor(newColor) {
-	currentColor = newColor;
-}
-
-penColor.onchange = e => setPenColor(e.target.value);
-
+// Creates 'boxes' in the 'playingField'.
 function createBoxes(rows, columns) {
 	for (let i = 1; i <= rows * columns; i++) {
 		playingField.insertAdjacentHTML('beforeend', `<div class="box"></div>`);
@@ -56,10 +58,9 @@ function createBoxes(rows, columns) {
 	});
 }
 
-createBoxes(rowsValue, columnsValue);
-painting();
-
+// All the painting logic.
 function painting() {
+	console.log('f');
 	boxes.forEach(box => {
 		box.addEventListener('mouseover', () => {
 			if (pen.classList.contains('active')) {
@@ -67,25 +68,32 @@ function painting() {
 			} else if (rainbow.classList.contains('active')) {
 				box.style.backgroundColor = `rgb(${rn()},${rn()},${rn()})`;
 			} else if (fill.classList.contains('active')) {
-				playingField.style.backgroundColor = `${currentColor}`;
+				boxes.forEach(box => {
+					box.style.backgroundColor = `${currentColor}`;
+					box.style.filter = null;
+				});
 			} else if (shadder.classList.contains('active')) {
 				style = window.getComputedStyle(box);
-				br = style.getPropertyValue('filter');
-				console.log(br);
-				console.log(typeof br);
-
-				box.style.filter = 'brightness(0.8)';
+				br = style.getPropertyValue('filter').match(/[0-9 , \.]+/g);
+				if (br === null && box.style.backgroundColor !== '') {
+					box.style.filter = 'brightness(0.9)';
+				} else if (br !== null) {
+					box.style.filter = `brightness(${br.join() - 0.1})`;
+				}
 			}
 		});
 	});
 }
+
+// Reset button logic.
 reset.addEventListener('click', () => {
 	boxes.forEach(box => {
-		box.classList.remove('color');
-		box.style.backgroundColor = 'white';
+		box.style.filter = null;
+		box.style.backgroundColor = null;
 	});
 });
 
+// Random number generator for the rgb in 'rainbow'.
 function rn() {
 	return Math.floor(Math.random() * 256 + 1);
 }

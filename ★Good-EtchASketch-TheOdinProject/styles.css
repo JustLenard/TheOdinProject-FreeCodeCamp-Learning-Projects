@@ -39,11 +39,3 @@ nav {
 	gap: 1rem;
 	justify-content: space-between;
 }
-
-.box {
-	border: 1px solid black;
-}
-
-.color {
-	background-color: red;
-}
