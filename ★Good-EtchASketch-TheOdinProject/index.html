@@ -9,25 +9,28 @@
 		<script src="scripts.js" defer></script>
 	</head>
 	<body>
+		<h1>Etch-A-Sketch</h1>
 		<nav>
-			<input class="pen-color" type="color" />
-			<div class="pen">Pen</div>
-			<div class="rainbow">Rainbow</div>
-			<div class="reset-btn">Reset</div>
-			<div class="fill">Fill</div>
-			<div class="shadder">Shadder</div>
+			<input id="pen-color" type="color" />
+			<div class="pen btn">Pen</div>
+			<div class="rainbow btn">Rainbow</div>
+			<div class="reset-btn btn">Reset</div>
+			<div class="fill btn">Fill</div>
+			<div class="shadder btn">Shadder</div>
 			<div class="container">
 				<div class="width">
-					<p>width (max=100)</p>
-					<input class="width-value" type="number" value="20" />
+					<p>Width:</p>
+					<input class="width-value" type="number" value="50" />
 				</div>
 				<div class="height">
-					<p>height (max=100)</p>
-
-					<input class="height-value" type="number" value="20" />
+					<p>Height:</p>
+					<input class="height-value" type="number" value="25" />
 				</div>
 			</div>
 		</nav>
 		<div class="playing-field"></div>
+		<footer>
+			Project done by JustLenard for the TheOdinProject curriculum.
+		</footer>
 	</body>
 </html>

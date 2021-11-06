@@ -5,7 +5,7 @@ var boxes;
 
 const playingField = document.querySelector('.playing-field');
 const reset = document.querySelector('.reset-btn');
-const penColor = document.querySelector('.pen-color');
+const penColor = document.querySelector('#pen-color');
 const pen = document.querySelector('.pen');
 const rainbow = document.querySelector('.rainbow');
 const fill = document.querySelector('.fill');
@@ -13,11 +13,12 @@ const shadder = document.querySelector('.shadder');
 const rowsArea = document.querySelector('.height-value');
 const columnsArea = document.querySelector('.width-value');
 
+//Creates the initial board.
 createBoxes(rowsValue, columnsValue);
 painting();
-penColor.onchange = e => setPenColor(e.target.value);
 
 // Handles pen color change.
+penColor.onchange = e => setPenColor(e.target.value);
 function setPenColor(newColor) {
 	currentColor = newColor;
 }
