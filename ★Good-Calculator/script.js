@@ -56,8 +56,13 @@ function calculateThis(expression) {
 	result = expression.split(' ');
 	result = result.filter(el => el !== null && el !== '');
 
-	console.log(result);
+	console.log(`Before Anything: ${result}`);
 	// console.log(`Expression before power: ${result}`);
+	isNegative(result);
+	if (result[0] === '+') {
+		result = result.slice(1, -1);
+		console.log(`Fucking why the fuck you find pluses: ${result}`);
+	}
 	paranthesis(result);
 	power(result);
 	// console.log(`Expression after power: ${result}`);
@@ -70,6 +75,9 @@ function calculateThis(expression) {
 
 	console.log(result);
 }
+
+arr = ['(fcu'];
+console.log(arr.includes('(fcu'));
 
 function paranthesis(result) {
 	if (result.includes('(') && result.includes(')')) {
@@ -133,12 +141,12 @@ function division(result) {
 }
 
 function addition(result) {
-	if (result.indexOf('+') !== -1 && result.indexOf('') === -1) {
-		i = result.indexOf('+');
-		let toReplaceWith = Number(result[i - 1]) + Number(result[i + 1]);
-		result.splice(i - 1, 3, toReplaceWith);
-		addition(result);
-	}
+	// if (result.indexOf('+') !== -1 && result.indexOf('') === -1) {
+	// 	i = result.indexOf('+');
+	// 	let toReplaceWith = Number(result[i - 1]) + Number(result[i + 1]);
+	// 	result.splice(i - 1, 3, toReplaceWith);
+	// 	addition(result);
+	// }
 }
 
 function subtraction(result) {
@@ -148,6 +156,26 @@ function subtraction(result) {
 		result.splice(i - 1, 3, toReplaceWith);
 		subtraction(result);
 	}
+}
+
+function isNegative(result) {
+	// for (let i = 0; i < result.length; i++) {
+	// 	if (result[0] === '-') {
+	// 		return True;
+	// 	}
+	// 	console.log(result.indexOf('(-'));
+	// }
+	result.forEach(minus => {
+		if (minus === '-') {
+			result.splice(
+				result.indexOf['-'],
+				2,
+				'+',
+				`${'-' + result[result.indexOf('-') + 1]}`
+			);
+		}
+		// console.log(result);
+	});
 }
 
 //Negative nummbers cause problems. Both for power and div/mult. power has
