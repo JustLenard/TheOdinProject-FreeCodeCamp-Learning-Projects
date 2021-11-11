@@ -8,6 +8,7 @@ const deleteBtn = document.querySelector('.delete');
 const clearBtn = document.querySelector('.clear');
 const toSolve = document.querySelector('.to-solve');
 const resultScreen = document.querySelector('.result');
+const equal = document.querySelector('.equal');
 
 let toCalculate = 0;
 let expression = '';
@@ -29,6 +30,13 @@ deleteBtn.addEventListener('click', () => {
 	resultScreen.textContent = expression;
 });
 
+//Equal
+equal.addEventListener('click', () => {
+	toSolve.textContent = result;
+	resultScreen.textContent = undefined;
+	expression = result;
+});
+
 //Making the rest of the buttons clickable
 passive.forEach(button => {
 	button.addEventListener('click', () => {
@@ -36,7 +44,7 @@ passive.forEach(button => {
 			expression += button.textContent;
 		} else if (operations.includes(button.textContent)) {
 			expression += ` ${button.textContent} `;
-		} else if (button.textContent === '* / X^') {
+		} else if (button.textContent === '* & ^') {
 			expression += ' * ';
 		}
 		expression = expression.replace('*  *', '^');
@@ -45,8 +53,13 @@ passive.forEach(button => {
 		// console.log(expression.split(' ').length);
 		calculateThis(expression);
 		// result = calculateThis();
+		console.log(`Another fuck: ${typeof Number(result)}`);
 		toSolve.textContent = expression;
-		resultScreen.textContent = result.join();
+		if (typeof Number(result) === 'number' && result.length === 1) {
+			resultScreen.textContent = result;
+		} else {
+			resultScreen.textContent = 'Nan';
+		}
 	});
 });
 // result = result.filter(el => el !== null && el !== '');
@@ -55,14 +68,15 @@ passive.forEach(button => {
 function calculateThis(expression) {
 	result = expression.split(' ');
 	result = result.filter(el => el !== null && el !== '');
+	// intoNum(result);
 
 	console.log(`Before Anything: ${result}`);
 	// console.log(`Expression before power: ${result}`);
 	isNegative(result);
-	if (result[0] === '+') {
-		result = result.slice(1, -1);
-		console.log(`Fucking why the fuck you find pluses: ${result}`);
-	}
+	// if (result[0] === '+') {
+	// 	result = result.slice(1, -1);
+	// 	console.log(`Fucking why the fuck you find pluses: ${result}`);
+	// }
 	paranthesis(result);
 	power(result);
 	// console.log(`Expression after power: ${result}`);
@@ -75,9 +89,6 @@ function calculateThis(expression) {
 
 	console.log(result);
 }
-
-arr = ['(fcu'];
-console.log(arr.includes('(fcu'));
 
 function paranthesis(result) {
 	if (result.includes('(') && result.includes(')')) {
@@ -141,12 +152,12 @@ function division(result) {
 }
 
 function addition(result) {
-	// if (result.indexOf('+') !== -1 && result.indexOf('') === -1) {
-	// 	i = result.indexOf('+');
-	// 	let toReplaceWith = Number(result[i - 1]) + Number(result[i + 1]);
-	// 	result.splice(i - 1, 3, toReplaceWith);
-	// 	addition(result);
-	// }
+	if (result.indexOf('+') !== -1 && result.indexOf('') === -1) {
+		i = result.indexOf('+');
+		let toReplaceWith = Number(result[i - 1]) + Number(result[i + 1]);
+		result.splice(i - 1, 3, toReplaceWith);
+		addition(result);
+	}
 }
 
 function subtraction(result) {
@@ -159,24 +170,32 @@ function subtraction(result) {
 }
 
 function isNegative(result) {
-	// for (let i = 0; i < result.length; i++) {
-	// 	if (result[0] === '-') {
-	// 		return True;
-	// 	}
-	// 	console.log(result.indexOf('(-'));
-	// }
-	result.forEach(minus => {
-		if (minus === '-') {
-			result.splice(
-				result.indexOf['-'],
-				2,
-				'+',
-				`${'-' + result[result.indexOf('-') + 1]}`
-			);
+	for (let i = 0; i < result.length; i++) {
+		if (result[i] === '-' && result[i - 1] === '(') {
+			result.splice(i, 2, `${'-' + result[i + 1]}`);
+		} else if (result[i] === '-' && i !== 0) {
+			result[i] = '+';
+			result[i + 1] = '-' + result[i + 1];
+		} else if (result[i] === '-' && i === 0) {
+			result.splice(i, 2, `${'-' + result[i + 1]}`);
 		}
-		// console.log(result);
-	});
+	}
+	console.log(`This: ${result}`);
 }
+
+function intoNum(result) {
+	result.forEach(elem => {
+		if (!operations.includes(elem)) {
+			console.log(elem);
+			result[elem] = Number(elem);
+			console.log(elem);
+		}
+	});
+	console.log(`This is the changed rsult?: ${result}`);
+}
+
+x = -2;
+console.log(x ** 4);
 
 //Negative nummbers cause problems. Both for power and div/mult. power has
 //another glitch whatsoever
