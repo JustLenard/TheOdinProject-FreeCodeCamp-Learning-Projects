@@ -2,6 +2,8 @@
   margin: 0;
   font-family: 'Roboto Mono', monospace;
   font-weight: normal;
+  font-size: 1rem;
+  color: #110f0f;
 }
 
 body {
@@ -25,13 +27,14 @@ h1 {
   background: #3b3939;
   padding: 2rem;
   color: silver;
+  font-size: 2rem;
 }
 
 .container {
   margin: 2rem auto;
   width: 400px;
   height: 600px;
-  background: #3b3939;
+  background: #201e1e;
   border-radius: 20px;
   display: -ms-grid;
   display: grid;
@@ -46,12 +49,6 @@ h1 {
   grid-auto-rows: minmax(auto);
   gap: 1rem;
   padding: 1rem;
-}
-
-.container div {
-  background: gray;
-  padding: 1rem;
-  text-align: center;
 }
 
 .display {
@@ -70,17 +67,41 @@ h1 {
           align-items: flex-end;
   word-break: break-word;
   word-wrap: wrap-all;
+  border-radius: 10px;
+  background: #565e44;
 }
 
 .display div {
   margin: 0;
-  border: 1px solid green;
   height: 2rem;
   max-width: 100%;
+  padding: 1rem;
+  font-weight: bold;
 }
 
-.passive, .active:hover {
+button {
+  -webkit-box-shadow: 0 7px #663d3d;
+          box-shadow: 0 7px #663d3d;
+  border-radius: 10px;
+  background: #914e49;
+  padding: 1rem;
+  text-align: center;
+  border: none;
+}
+
+button:hover {
+  -webkit-filter: brightness(0.9);
+          filter: brightness(0.9);
+}
+
+button:active {
   cursor: pointer;
+  -webkit-filter: brightness(0.9);
+          filter: brightness(0.9);
+  -webkit-transform: translateY(4px);
+          transform: translateY(4px);
+  -webkit-box-shadow: 0 3px #663d3d;
+          box-shadow: 0 3px #663d3d;
 }
 
 footer {

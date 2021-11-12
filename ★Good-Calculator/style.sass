@@ -1,7 +1,16 @@
+$header-footer: rgb(59, 57, 57)
+$container: rgb(32, 30, 30)
+$button: #914e49
+$button-shadow: #663d3d
+$font: #110f0f
+$display: #565e44
+
 *
     margin: 0
     font-family: 'Roboto Mono', monospace
     font-weight: normal
+    font-size: 1rem
+    color: $font
 
 body
     background: gray
@@ -16,12 +25,13 @@ h1
     background: rgb(59, 57, 57)
     padding: 2rem
     color: silver
+    font-size: 2rem
 
 .container
     margin: 2rem auto
     width: 400px
     height: 600px
-    background: rgb(59, 57, 57)
+    background: $container
     border-radius: 20px
     display: grid
     grid-template-columns: repeat(4, 1fr)
@@ -30,11 +40,6 @@ h1
     grid-auto-rows: minmax(auto)
     gap: 1rem
     padding: 1rem
-    div
-        background: gray
-        padding: 1rem
-        text-align: center
-
 
 .display
     grid-column: 1/5
@@ -43,18 +48,36 @@ h1
     align-items: flex-end
     word-break: break-word
     word-wrap: wrap-all
+    border-radius: 10px
+    background: $display
     div
         margin: 0
-        border: 1px solid green
         height: 2rem
         max-width: 100%
+        padding: 1rem
+        font-weight: bold
 
-.passive , .active:hover
+button
+    box-shadow: 0 7px $button-shadow
+    border-radius: 10px
+    background: $button
+    padding: 1rem
+    text-align: center
+    border: none
+
+
+button:hover
+    filter: brightness(0.9)
+
+button:active
     cursor: pointer
+    filter: brightness(0.9)
+    transform: translateY(4px)
+    box-shadow: 0 3px $button-shadow
 
 
 footer
-    background-color: rgb(59, 57, 57)
+    background-color: $header-footer
     padding: 1rem
     display: flex
     justify-content: center
