@@ -5,6 +5,7 @@
 		rgba(100, 21, 133, 0.7063200280112045) 50%,
 		rgba(172, 3, 37, 1) 100%
 	);
+	font-family: sans-serif;
 }
 
 * {
@@ -25,7 +26,7 @@ body {
 
 .hat {
 	width: 90vw;
-	height: 20vh;
+	height: 15vh;
 	border: 3px solid black;
 	margin: 10px auto;
 	border-radius: 10px;
@@ -54,8 +55,8 @@ body {
 
 .battleground-hat {
 	width: 90vw;
-	height: 5vh;
-	margin: 3% auto;
+	height: 4vh;
+	margin: 1rem auto;
 	border: 2px solid black;
 	display: flex;
 	align-items: center;
@@ -63,6 +64,8 @@ body {
 	overflow: hidden;
 	background: var(--background);
 	box-shadow: 10px 10px 5px 0px rgb(0 0 0 / 40%);
+	border-radius: 10px;
+	font-weight: bold;
 }
 
 .left {
@@ -83,7 +86,7 @@ body {
 .main {
 	width: 90vw;
 	height: 70vh;
-	margin: 3% auto;
+	margin: 0 auto;
 	display: flex;
 	gap: 2rem;
 }
@@ -102,11 +105,15 @@ body {
 .hand-box {
 	padding: 1.25rem;
 	border-radius: 20px;
-	background-color: rgb(170, 191, 218);
+	background-color: #11385f;
 	box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-	transition: all 1s;
 	font-size: 5rem;
-	color: #318ce7;
+	color: #abbdcf;
+}
+
+.robot-hand {
+	background-color: rgb(129, 19, 19);
+	color: #c0c4c0;
 }
 
 .hand-box:hover {
@@ -114,9 +121,8 @@ body {
 }
 
 .click {
-	border: 1px solid rgb(223, 211, 211);
-	background-color: #7cb9e8;
-	color: rgb(194, 210, 221);
+	border: 2px solid rgb(223, 211, 211);
+	filter: brightness(1.5);
 }
 
 .battleground {
@@ -140,10 +146,21 @@ body {
 	width: 6rem;
 }
 
-.round-winner {
+.round-winner,
+.choice-vs-choice {
+	text-transform: capitalize;
 	text-align: center;
 	font-weight: bold;
 	font-size: 2rem;
+}
+
+.right-column {
+	overflow: hidden;
+}
+
+.canvas {
+	width: 10%;
+	height: 10%;
 }
 
 #fighto {
@@ -170,13 +187,29 @@ body {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%) scale(0);
-	border: 1px solid black;
+	border: 2px solid black;
 	border-radius: 10px;
 	z-index: 1;
 	background-color: white;
 	width: 500px;
 	max-width: 80%;
 	padding: 15px 15px;
+	width: 25rem;
+	height: 25rem;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	flex-direction: column;
+	background-color: rgb(71, 65, 65);
+	font-weight: bold;
+	font-size: 3rem;
+}
+
+button {
+	font-size: 2rem;
+	border-radius: 10px;
+	padding: 10px;
+	background-color: rgb(167, 159, 159);
 }
 
 .modal.active {
@@ -197,4 +230,14 @@ body {
 #overlay.active {
 	opacity: 1;
 	pointer-events: all;
+}
+
+footer {
+	margin-top: 1rem;
+	padding: 1rem;
+	background-color: rgb(59, 57, 57);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: silver;
 }
