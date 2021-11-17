@@ -9,39 +9,48 @@
 		<script src="script.js" defer></script>
 	</head>
 	<body>
+		<h1>Tic Tac Toe</h1>
 		<div class="container">
 			<header>
-				<h1>Tic Tac Toe</h1>
 				<div class="options">
-					<div class="dificulty">
-						F?
-						<div>Easy</div>
-						<div>Normal</div>
-						<div>Hard</div>
+					<div class="dificulty-box">
+						<div class="f">Dificulty</div>
+						<div class="dificulty-choices">
+							<button data-dificutly="easy" class="dificulty">Easy</button>
+							<button data-dificutly="normal" class="dificulty">Normal</button>
+							<button data-dificutly="impossible" class="dificulty">
+								Impossible
+							</button>
+						</div>
 					</div>
-					<div class="marker">
-						Marker
-						<div class="x">x</div>
-						<div class="marker-o">o</div>
+					<div class="marker-box">
+						<div>Marker</div>
+						<div class="marker-choices">
+							<button data-marker="x" class="marker">x</button>
+							<button data-marker="o" class="marker">○</button>
+						</div>
 					</div>
 				</div>
 			</header>
 			<main>
 				<div>
 					<div class="playing-field">
-						<div></div>
-						<div></div>
-						<div></div>
-						<div></div>
-						<div></div>
-						<div></div>
-						<div></div>
-						<div></div>
-						<div></div>
+						<div data-position="1"></div>
+						<div data-position="2"></div>
+						<div data-position="3"></div>
+						<div data-position="4"></div>
+						<div data-position="5"></div>
+						<div data-position="6"></div>
+						<div data-position="7"></div>
+						<div data-position="8"></div>
+						<div data-position="9"></div>
 					</div>
 				</div>
 			</main>
-			<button>Restart</button>
+			<button class="restart">Restart</button>
 		</div>
+		<footer>
+			Project done by JustLenard for the TheOdinProject curriculum.
+		</footer>
 	</body>
 </html>
