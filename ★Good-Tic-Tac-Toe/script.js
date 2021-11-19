@@ -86,6 +86,11 @@ function aiMove() {
 	}
 }
 
+//Check winner
+// function checkWinner(){
+// 	if (playingField[0].textContent + playingField[0].textContent + playingField[0].textContent ===)
+// }
+
 //Handled Game Over
 function endGameModal() {
 	console.log('Game Over');
