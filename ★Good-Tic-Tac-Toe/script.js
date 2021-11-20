@@ -1,7 +1,19 @@
 const dificultyChoices = document.querySelectorAll('[data-dificutly]');
 const markerChoices = document.querySelectorAll('[data-marker]');
 const playingField = document.querySelectorAll('[data-position]');
-const restartBtn = document.querySelector('.restart');
+const restartBtn = document.querySelectorAll('.restart');
+const endGameModal = document.querySelector('.end-game-modal');
+const winningMessage = document.querySelector('[data-winning-message-text]');
+const winConditions = [
+	[0, 1, 2],
+	[3, 4, 5],
+	[6, 7, 8],
+	[0, 3, 6],
+	[1, 4, 7],
+	[2, 5, 8],
+	[0, 4, 8],
+	[6, 4, 2],
+];
 
 var xCounter = 0;
 var playerMarker = 'x';
@@ -42,58 +54,78 @@ playingField.forEach(choice => {
 			if (xCounter < 5) {
 				aiMove();
 			} else {
-				endGameModal();
+				callEndGameModal();
 			}
 		}
+		checkWinner();
+		console.log(`Here it is`);
+		console.log(
+			playingField[0].textContent +
+				playingField[1].textContent +
+				playingField[2].textContent
+		);
 	});
 });
 
 //Restart
 restart();
 function restart() {
-	restartBtn.addEventListener('click', () => {
+	restartBtn.forEach(button => {
+		button.addEventListener('click', () => {
+			playingField.forEach(choice => {
+				choice.classList.remove('active');
+				choice.textContent = '';
+			});
+			xCounter = 0;
+			endGameModal.classList.remove('show');
+		});
+		xCounter = 0;
 		playingField.forEach(choice => {
 			choice.classList.remove('active');
 			choice.textContent = '';
 		});
-		xCounter = 0;
-	});
-	xCounter = 0;
-	playingField.forEach(choice => {
-		choice.classList.remove('active');
-		choice.textContent = '';
 	});
 }
 
 //Ai logic Easy
 function aiMove() {
 	randNum = randomNumber();
-	console.log(randNum);
-	console.log(playingField[randNum].textContent);
 	if (playingField[randNum].textContent === '') {
 		console.log(playerMarker);
 		switch (playerMarker) {
 			case 'x':
-				console.log('I am in x');
 				playingField[randNum].textContent = '○';
 				break;
 			case '○':
-				console.log('I am in o');
 				playingField[randNum].textContent = 'x';
 		}
+		checkWinner();
 	} else if (playingField[randNum].textContent !== '') {
 		aiMove();
 	}
 }
 
 //Check winner
-// function checkWinner(){
-// 	if (playingField[0].textContent + playingField[0].textContent + playingField[0].textContent ===)
-// }
+function checkWinner() {
+	winConditions.forEach(condition => {
+		if (
+			['xxx', '○○○'].includes(
+				playingField[condition[0]].textContent +
+					playingField[condition[1]].textContent +
+					playingField[condition[2]].textContent
+			)
+		) {
+			let winner = playingField[condition[0]].textContent;
+			callEndGameModal(winner);
+		}
+	});
+}
 
-//Handled Game Over
-function endGameModal() {
-	console.log('Game Over');
+//Handle Game Over
+function callEndGameModal(winner) {
+	winningMessage.textContent = `The winner is ${winner}`;
+	console.log(`The winner is ${winner}`);
+	endGameModal.classList.add('show');
 }
 
 //Random number

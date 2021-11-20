@@ -6,7 +6,7 @@
 }
 
 body {
-  background: gray;
+  background: #3d3c3c;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -132,5 +132,38 @@ footer {
       -ms-flex-align: center;
           align-items: center;
   color: silver;
+}
+
+.end-game-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 5rem;
+  color: silver;
+  gap: 2rem;
+}
+
+.end-game-modal button {
+  font-size: 3rem;
+}
+
+.end-game-modal.show {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 /*# sourceMappingURL=style.css.map */
