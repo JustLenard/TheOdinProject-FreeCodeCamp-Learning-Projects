@@ -3,8 +3,11 @@ win_conditions = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6
 hu_player = 'x'
 ai = 'o'
 
+print(f'{0} {1} {2}\n{3} {4} {5}\n{6} {7} {8}\n')
+
+
 def print_board(board):
-    print(f'{0} {1} {2}\n{3} {4} {5}\n{6} {7} {8}\n')
+    # print(f'{0} {1} {2}\n{3} {4} {5}\n{6} {7} {8}\n')
     print(f'{board[0]} {board[1]} {board[2]}\n{board[3]} {board[4]} {board[5]}\n{board[6]} {board[7]} {board[8]}\n')
 
 
@@ -17,12 +20,13 @@ def check_empty(board):
 def check_win(board, player):
     for condition in win_conditions:
         if board[condition[0]] + board[condition[1]] + board[condition[2]] == player * 3:
-            return True
+            return player
     return False
 
 
 board = ['x','o','x','o','o','x','_','_','_']
 print_board(board)
+print('------------------------------')
 
 # def ai_turn(board):
 #     # return the valid position
@@ -54,27 +58,70 @@ def valid_positions(board):
     for x in range(9):
         if board[x] == '_':
             valid_positions.append(x)
-    print(valid_positions)
+    # print(valid_positions)
     return valid_positions
 
-best_score = -100
-def minimax(new_board, player):
+
+def minimax(new_board, player, is_maximazing):
+    print(f"It's the turn of: {player}")
+
+    scores = []
+    best_score = -100
     avail_positions = valid_positions(new_board)
-    
-    for position in avail_positions:
-        new_board[position] = player
-        print_board(new_board)
-        if check_win(new_board, ai):
-            return 10
-        elif check_win(new_board, hu_player):
-            return -10
-        else:
-            return 0
+    if is_maximazing:
+        print(f'Board at start  of {player} turn {new_board}')
+        print(avail_positions)
+        for position in avail_positions:
+            new_board[position] = player
+            print_board(new_board)
+            check = check_win(new_board, player)
+            if check_win(new_board,player) == player:
+                print('10 \n')
+                scores.append(10)
+            elif  check_win(new_board,player) == False:
+                print('0\n')
+                scores.append(0)
+            else:
+                print('-10\n')
+                scores.append(-10)
+            new_board[position] = '_'
+        best_score = max(scores)
+        new_board[avail_positions[scores.index(best_score)]] = player
+        print(f'Board after after {player} move: {new_board}')
+        print(f'Best score is for max: {best_score}\n')
+        if check_empty(new_board):
+            minimax(new_board, hu_player, False)
+        
+    elif not is_maximazing:
+        print(f'Board at start  of {player} turn {new_board}')
+        for position in avail_positions:
+            new_board[position] = player
+            print_board(new_board)
+            check = check_win(new_board, player)
+            if check_win(new_board,player) == player:
+                print('-10 \n')
+                scores.append(-10)
+            elif check_win(new_board,player) == False:
+                print('0\n')
+                scores.append(0)
+            else:
+                print('10\n')
+                scores.append(10)
+            new_board[position] = '_'
+
+        best_score = min(scores)
+        new_board[avail_positions[scores.index(best_score)]] = player
+        print(f'Board after after {player} move: {new_board}')
+
+        print(f'Best score is for min: {best_score}\n')
+
+        if check_empty:
+            minimax(new_board, ai, True)
 
 
-val = minimax(board,hu_player)
-minimax(board, hu_player)
-print(val)
+# val = minimax(board,hu_player)
+minimax(board, ai, True)
+# print(val)
     # for position in valid_positions:
     #     print('in the for loop')
     #     board[position] = ai
