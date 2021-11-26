@@ -21,14 +21,14 @@ def check_empty(board):
 def check_win(board):
     for condition in win_conditions:
         if board[condition[0]] + board[condition[1]] + board[condition[2]] == ai * 3:
-            return 10
-        elif board[condition[0]] + board[condition[1]] + board[condition[2]] == hu_player * 3:   
             return -10
+        elif board[condition[0]] + board[condition[1]] + board[condition[2]] == hu_player * 3:   
+            return 10
          
     return 0
 
 
-board = ['x','o','x','o','_','x','o','_','_']
+board = ['x','o','x','o','o','x','_','_','_']
 
 print_board(board)
 print('------------------------------')
@@ -53,7 +53,7 @@ def minimax(board, deph, is_maximaxing):
     if check_empty == False:
         return 0
     
-    if is_maximaxing:
+    if (is_maximaxing):
         best_score = -1000
         
         for x in range(9):
@@ -76,24 +76,36 @@ def find_best_move(board):
     best_move = -1
     best_value = -1000
     
-    avail_position = valid_positions(board)
-    # print(avail_position)
-    for position in avail_position:
-        board[position] = hu_player
-        move_value = minimax(board, 0 , False)
-        print_board(board)
+    # avail_position = valid_positions(board)
+    # # print(avail_position)
+    # for position in avail_position:
+    #     board[position] = hu_player
+    #     move_value = minimax(board, 0 , False)
+    #     print_board(board)
 
-        board[position] = '_'
-        print(move_value)
+    #     board[position] = '_'
+    #     print(move_value)
         
-        if move_value > best_value:
-            best_value = move_value
-            best_move = position
+    #     if move_value > best_value:
+    #         best_value = move_value
+    #         best_move = position
+    # return best_move
+    for x in range(9):
+        if board[x] == '_':
+            board[x] = hu_player
+            move_value = minimax(board, 0, False)
+            board[x] = '_'
+            print(f'move value: {move_value} and best move {best_move}')
+
+            if move_value > best_value:
+                best_value = move_value
+                best_move = x
     return best_move
 
 best_move1 = find_best_move(board)
 
 print(best_move1)
+print([x for x in range(9)])
 # def ai_turn(board):
 #     # return the valid position
 #     valid_positions = []
