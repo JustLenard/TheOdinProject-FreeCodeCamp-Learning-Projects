@@ -1,3 +1,5 @@
+import random
+
 board = ['_' for x in range(9)]
 win_conditions = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
 hu_player = 'o'
@@ -25,7 +27,6 @@ def check_win(board, ):
             return -10
     return 0
 
-board = ['x','o','x','o','_','x','o','_','_']
 print_board(board)
 print('------------------')
 
@@ -50,8 +51,9 @@ def minimax_ai(board, current_player):
     for legal_move in legal_moves:
         
         new_board = make_move(board, current_player, legal_move)
-        
-        score = minimax(new_board, ai)
+        opponet = get_opponent(current_player)
+
+        score = minimax(new_board, opponet)
         
         board[legal_move] = '_'
         
@@ -59,6 +61,7 @@ def minimax_ai(board, current_player):
             best_score = score
             best_move = legal_move
     print(f'Best move is: {best_move} with the score of: {best_score}')
+    return best_move
 
 
 
@@ -66,8 +69,11 @@ def minimax_ai(board, current_player):
 def minimax(board, current_player):
     legal_moves = get_legal_moves(board)
 
-    if len(legal_moves) == 0:
+    if check_win(board) != 0:
         return check_win(board)
+    
+    if len(legal_moves) == 0:
+        return 0
 
     scores = []
     
@@ -91,5 +97,40 @@ def minimax(board, current_player):
     else:
         return min(scores)
             
-            
-minimax_ai(board, ai)
+
+# minimax_ai(board, ai)
+# minimax(board, ai)
+
+def player_input(board):
+    player_move = input('Type the positin for "o" or 9 to exit: ')
+    if player_move in [str(x) for x in range(9)]:
+        board[int(player_move)] = hu_player
+    elif player_move == '9':
+        return
+    elif player_move == 'restart':
+        board = ['_' for x in range(9)]
+    else:
+        print('Please give a valid input.')
+    best_move = minimax_ai(board, ai)
+    legal_moves = get_legal_moves(board)
+    if len(legal_moves) == 0:
+        board[random.randint(0,8)] = ai        
+    else:
+        board[best_move] = ai
+    print_board(board)
+    winner = check_win(board)
+    if winner != False:
+        print(f'The winner is {winner}')
+        return
+    if len(legal_moves) > 0:
+        player_input(board)
+
+player_input(board)
+
+
+
+
+
+
+
+
