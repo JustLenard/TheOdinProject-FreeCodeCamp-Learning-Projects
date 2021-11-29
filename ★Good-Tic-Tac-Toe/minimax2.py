@@ -77,7 +77,8 @@ def minimax(board, current_player):
         print_board(new_board)
         # print(f'The value of the current move is {check_win(board)}')
         # print(new_board)
-        opponet = get_opponent(current_player)         
+        opponet = get_opponent(current_player)
+        print(f'This is opponent: {opponet}')         
         # print(opponet)
         score = minimax(new_board, opponet)
         # new_board
@@ -92,39 +93,3 @@ def minimax(board, current_player):
             
             
 minimax_ai(board, ai)
-# minimax(board, ai)
-
-# print('Now trying to find the best move')
-
-# def find_best_move(board):
-#     scores = []
-#     legal_moves = get_legal_moves(board)
-#     for legal_move in legal_moves:
-#         board[legal_move] = ai
-#         score = minimax(board, ai)
-#         print(f'The score of the current move is: {score}')
-#         board[legal_move] = '_'
-        
-# find_best_move(board)
-    
-
-# def minimax(board):
-#     legal_moves = get_legal_moves(board)
-
-#     if len(legal_moves) == 0:
-#         return check_win(board)
-
-#     scores = []
-
-#     for legal_move in legal_moves:
-#         new_board = make_move(board, ai, legal_move)
-                
-#         print_board(new_board)
-
-#         score = minimax(new_board)
-
-#         scores.append(score)
-#         board[legal_move] = '_'
-#     print(scores)
-
-# minimax(board)
