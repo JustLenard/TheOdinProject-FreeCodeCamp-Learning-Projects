@@ -17,6 +17,14 @@ const winConditions = [
 
 var xCounter = 0;
 var playerMarker = 'x';
+const internalBoard = ['_', '_', '_', '_', '_', '_', '_', '_', '_'];
+
+function printBoard(internalBoard) {
+	console.log(internalBoard.slice(0, 3));
+	console.log(internalBoard.slice(3, 6));
+	console.log(internalBoard.slice(6, 9));
+}
+printBoard(internalBoard);
 
 //Difficulty choice
 dificultyChoices.forEach(choice => {
@@ -41,6 +49,22 @@ markerChoices.forEach(choice => {
 	});
 });
 
+// Get all the legal moves
+function getLegalMoves() {
+	legalMoves = [];
+	i = 0;
+	playingField.forEach(choice => {
+		if (choice.textContent === '') {
+			legalMoves.push(i);
+			i++;
+		} else {
+			i++;
+		}
+	});
+	console.log(legalMoves);
+	return legalMoves;
+}
+
 //Player move
 playingField.forEach(choice => {
 	choice.addEventListener('click', () => {
@@ -51,6 +75,7 @@ playingField.forEach(choice => {
 			xCounter++;
 			choice.classList.add('active');
 			choice.textContent = playerMarker;
+			getLegalMoves();
 			if (xCounter < 5) {
 				aiMove();
 			} else {
@@ -87,6 +112,16 @@ function restart() {
 	});
 }
 
+// Find who is the opponent
+function getOpponent() {
+	if (playerMarker === 'x') {
+		opponent = '○';
+	} else if (playerMarker === '○') {
+		opponent = 'x';
+	}
+	return opponent;
+}
+
 //Ai logic Easy
 function aiMove() {
 	randNum = randomNumber();
@@ -104,6 +139,8 @@ function aiMove() {
 		aiMove();
 	}
 }
+
+function minimax_ai() {}
 
 //Check winner
 function checkWinner() {
