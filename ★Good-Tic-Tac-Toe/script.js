@@ -26,6 +26,15 @@ function printBoard(internalBoard) {
 }
 printBoard(internalBoard);
 
+//Update the internal board for AI to work with
+function updateInternalBoard() {
+	console.log(internalBoard);
+	for (var i = 0; i < 9; i++) {
+		internalBoard[i] = playingField[i].textContent;
+	}
+	console.log(internalBoard);
+}
+
 //Difficulty choice
 dificultyChoices.forEach(choice => {
 	choice.addEventListener('click', () => {
@@ -84,11 +93,12 @@ playingField.forEach(choice => {
 		}
 		checkWinner();
 		console.log(`Here it is`);
-		console.log(
-			playingField[0].textContent +
-				playingField[1].textContent +
-				playingField[2].textContent
-		);
+		// console.log(
+		// 	playingField[0].textContent +
+		// 		playingField[1].textContent +
+		// 		playingField[2].textContent
+		// );
+		updateInternalBoard();
 	});
 });
 
@@ -140,7 +150,10 @@ function aiMove() {
 	}
 }
 
-function minimax_ai() {}
+function minimax_ai() {
+	let bestMove = None;
+	let bestScore = None;
+}
 
 //Check winner
 function checkWinner() {
