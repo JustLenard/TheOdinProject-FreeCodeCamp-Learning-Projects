@@ -16,9 +16,9 @@ const winConditions = [
 ];
 
 var xCounter = 0;
-var playerMarker = 'x';
+var player = 'x';
 var opponent = '○';
-const internalBoard = ['1', '2', '_', '_', '_', '_', '_', '_', '_'];
+const internalBoard = ['_', '_', '_', '_', '_', '_', '_', '_', '_'];
 
 function printBoard(internalBoard) {
 	console.log(internalBoard.slice(0, 3));
@@ -60,8 +60,8 @@ markerChoices.forEach(choice => {
 			choice.classList.remove('active');
 		});
 		choice.classList.add('active');
-		playerMarker = choice.textContent;
-		console.log(playerMarker);
+		player = choice.textContent;
+		console.log(player);
 		restart();
 	});
 });
@@ -69,24 +69,22 @@ markerChoices.forEach(choice => {
 // Get all the legal moves
 function getLegalMoves(board) {
 	legalMoves = [];
-	i = 0;
-	playingField.forEach(choice => {
-		if (choice.textContent === '' || choice.textContent === '_') {
+	for (var i = 0; i < 9; i++) {
+		if (board[i] === '_') {
 			legalMoves.push(i);
-			i++;
-		} else {
-			i++;
 		}
-	});
+	}
 	// console.log(legalMoves);
+	// console.log(`First legal moves ${legalMoves.length}`);
+
 	return legalMoves;
 }
 
-moves = getLegalMoves(internalBoard);
-console.log(moves);
+// moves = getLegalMoves(internalBoard);
+// console.log(`This is moves ${moves}`);
 
-function checkWinner(board) {
-	opp = getOpponent();
+function checkWinner(board, currentPlayer) {
+	opp = getOpponent(currentPlayer);
 	winConditions.forEach(condition => {
 		if (
 			board[condition[0]] + board[condition[1]] + board[condition[2]] ===
@@ -96,7 +94,7 @@ function checkWinner(board) {
 		}
 		if (
 			board[condition[0]] + board[condition[1]] + board[condition[2]] ===
-			playerMarker + playerMarker + playerMarker
+			player + player + player
 		) {
 			return -10;
 		}
@@ -113,75 +111,62 @@ playingField.forEach(choice => {
 		if (choice.textContent === '') {
 			xCounter++;
 			choice.classList.add('active');
-			choice.textContent = playerMarker;
+			choice.textContent = player;
+			updateInternalBoard(internalBoard);
+			printBoard(internalBoard);
+			playingField[minimaxAi(internalBoard, opponent)].textContent = opponent;
+			updateInternalBoard(internalBoard);
+
+			printBoard(internalBoard);
+
 			// getLegalMoves(internalBoard);
-			if (xCounter < 5) {
-				// minimaxAi(internalBoard, opponent);
-				playingField[minimaxAi(internalBoard, opponent)].textContent = opponent;
-			} else {
-				callEndGameModal();
-			}
+			// if (xCounter < 5) {
+			// 	// minimaxAi(internalBoard, opponent);
+			// 	playingField[minimaxAi(internalBoard, opponent)].textContent = opponent;
+			// } else {
+			// 	callEndGameModal();
+			// }
 		}
-		checkWinner();
-		console.log(`Here it is`);
+		// checkWinner();
+		// console.log(`Here it is`);
 		// console.log(
 		// 	playingField[0].textContent +
 		// 		playingField[1].textContent +
 		// 		playingField[2].textContent
 		// );
-		updateInternalBoard(internalBoard);
-		console.log(`Consoling the internal Board ${internalBoard}`);
+		// updateInternalBoard(internalBoard);
+		// console.log(`Consoling the internal Board ${internalBoard}`);
 		// printBoard(internalBoard);
 	});
 });
 
-//Restart
-restart();
-function restart() {
-	restartBtn.forEach(button => {
-		button.addEventListener('click', () => {
-			playingField.forEach(choice => {
-				choice.classList.remove('active');
-				choice.textContent = '';
-			});
-			xCounter = 0;
-			endGameModal.classList.remove('show');
-		});
-		xCounter = 0;
-		playingField.forEach(choice => {
-			choice.classList.remove('active');
-			choice.textContent = '';
-		});
-	});
-}
-
 // Find who is the opponent
 function getOpponent(currentPlayer) {
-	if (currentPlayer === 'x') {
+	if (currentPlayer === player) {
 		opponent = '○';
-	} else if (currentPlayer === '○') {
+	} else if (currentPlayer === opponent) {
 		opponent = 'x';
 	}
 	return opponent;
 }
 
 //Ai logic Easy
-function EasyAiMove() {
-	randNum = randomNumber();
-	if (playingField[randNum].textContent === '') {
-		console.log(playerMarker);
-		switch (playerMarker) {
-			case 'x':
-				playingField[randNum].textContent = '○';
-				break;
-			case '○':
-				playingField[randNum].textContent = 'x';
-		}
-		checkWinner();
-	} else if (playingField[randNum].textContent !== '') {
-		EasyAiMove();
-	}
-}
+// function EasyAiMove() {
+// 	randNum = randomNumber();
+// 	if (playingField[randNum].textContent === '') {
+// 		console.log(playerMarker);
+// 		switch (playerMarker) {
+// 			case 'x':
+// 				playingField[randNum].textContent = '○';
+// 				break;
+// 			case '○':
+// 				playingField[randNum].textContent = 'x';
+// 		}
+// 		checkWinner();
+// 	} else if (playingField[randNum].textContent !== '') {
+// 		EasyAiMove();
+// 	}
+// }
 
 function makeMove(board, currentPlayer, position) {
 	board[position] = currentPlayer;
@@ -193,17 +178,17 @@ function minimaxAi(board, currentPlayer) {
 	let bestScore = undefined;
 
 	legalMoves = getLegalMoves(board);
-
+	// console.log(`this is legal Moves in minimax ${legalMoves}`);
 	legalMoves.forEach(legalMove => {
 		newBoard = makeMove(board, currentPlayer, legalMove);
 		opponet = getOpponent(currentPlayer);
 
-		score = minimax(opponent, newBoard);
+		score = minimax(newBoard, opponet);
 
-		board[legal_move] = '_';
+		board[legalMove] = '_';
 
-		if (bestScore === None || score > bestScore) {
-			bestScore = score + 1;
+		if (bestScore === undefined || score > bestScore) {
+			bestScore = score;
 			bestMove = legalMove;
 		}
 	});
@@ -212,13 +197,14 @@ function minimaxAi(board, currentPlayer) {
 
 function minimax(board, currentPlayer) {
 	legalMoves = getLegalMoves(board);
+	// console.log(`Here is the length of legal moves: ${legalMoves.length}`);
 
-	if (checkWinner(board) !== 0) {
-		return checkWinner(board);
+	if (checkWinner(board, currentPlayer) !== 0) {
+		return checkWinner(board, currentPlayer);
 	}
 
 	if (legalMoves.length === 0) {
-		console.log(`Here is the length of legal moves: ${legalMoves.length}`);
+		// console.log(`Here is the length of legal moves: ${legalMoves.length}`);
 		return 0;
 	}
 
@@ -294,6 +280,26 @@ function callEndGameModal(winner) {
 	winningMessage.textContent = `The winner is ${winner}`;
 	console.log(`The winner is ${winner}`);
 	endGameModal.classList.add('show');
+}
+
+//Restart
+restart();
+function restart() {
+	restartBtn.forEach(button => {
+		button.addEventListener('click', () => {
+			playingField.forEach(choice => {
+				choice.classList.remove('active');
+				choice.textContent = '';
+			});
+			xCounter = 0;
+			endGameModal.classList.remove('show');
+		});
+		xCounter = 0;
+		playingField.forEach(choice => {
+			choice.classList.remove('active');
+			choice.textContent = '';
+		});
+	});
 }
 
 //Random number
