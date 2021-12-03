@@ -17,7 +17,8 @@ const winConditions = [
 
 var xCounter = 0;
 var playerMarker = 'x';
-const internalBoard = ['_', '_', '_', '_', '_', '_', '_', '_', '_'];
+var opponent = '○';
+const internalBoard = ['1', '2', '_', '_', '_', '_', '_', '_', '_'];
 
 function printBoard(internalBoard) {
 	console.log(internalBoard.slice(0, 3));
@@ -25,14 +26,21 @@ function printBoard(internalBoard) {
 	console.log(internalBoard.slice(6, 9));
 }
 printBoard(internalBoard);
+// console.log(playingField[0].textContent === '');
 
 //Update the internal board for AI to work with
-function updateInternalBoard() {
-	console.log(internalBoard);
+function updateInternalBoard(internalBoard) {
+	// console.log(internalBoard);
+
 	for (var i = 0; i < 9; i++) {
-		internalBoard[i] = playingField[i].textContent;
+		console.log(playingField[i].textContent);
+		if (playingField[i].textContent === '') {
+			internalBoard[i] = '_';
+		} else {
+			internalBoard[i] = playingField[i].textContent;
+		}
 	}
-	console.log(internalBoard);
+	// console.log(internalBoard);
 }
 
 //Difficulty choice
@@ -59,19 +67,41 @@ markerChoices.forEach(choice => {
 });
 
 // Get all the legal moves
-function getLegalMoves() {
+function getLegalMoves(board) {
 	legalMoves = [];
 	i = 0;
 	playingField.forEach(choice => {
-		if (choice.textContent === '') {
+		if (choice.textContent === '' || choice.textContent === '_') {
 			legalMoves.push(i);
 			i++;
 		} else {
 			i++;
 		}
 	});
-	console.log(legalMoves);
+	// console.log(legalMoves);
 	return legalMoves;
+}
+
+moves = getLegalMoves(internalBoard);
+console.log(moves);
+
+function checkWinner(board) {
+	opp = getOpponent();
+	winConditions.forEach(condition => {
+		if (
+			board[condition[0]] + board[condition[1]] + board[condition[2]] ===
+			opp + opp + opp
+		) {
+			return 10;
+		}
+		if (
+			board[condition[0]] + board[condition[1]] + board[condition[2]] ===
+			playerMarker + playerMarker + playerMarker
+		) {
+			return -10;
+		}
+	});
+	return 0;
 }
 
 //Player move
@@ -84,9 +114,10 @@ playingField.forEach(choice => {
 			xCounter++;
 			choice.classList.add('active');
 			choice.textContent = playerMarker;
-			getLegalMoves();
+			// getLegalMoves(internalBoard);
 			if (xCounter < 5) {
-				aiMove();
+				// minimaxAi(internalBoard, opponent);
+				playingField[minimaxAi(internalBoard, opponent)].textContent = opponent;
 			} else {
 				callEndGameModal();
 			}
@@ -98,7 +129,9 @@ playingField.forEach(choice => {
 		// 		playingField[1].textContent +
 		// 		playingField[2].textContent
 		// );
-		updateInternalBoard();
+		updateInternalBoard(internalBoard);
+		console.log(`Consoling the internal Board ${internalBoard}`);
+		// printBoard(internalBoard);
 	});
 });
 
@@ -123,17 +156,17 @@ function restart() {
 }
 
 // Find who is the opponent
-function getOpponent() {
-	if (playerMarker === 'x') {
+function getOpponent(currentPlayer) {
+	if (currentPlayer === 'x') {
 		opponent = '○';
-	} else if (playerMarker === '○') {
+	} else if (currentPlayer === '○') {
 		opponent = 'x';
 	}
 	return opponent;
 }
 
 //Ai logic Easy
-function aiMove() {
+function EasyAiMove() {
 	randNum = randomNumber();
 	if (playingField[randNum].textContent === '') {
 		console.log(playerMarker);
@@ -146,30 +179,115 @@ function aiMove() {
 		}
 		checkWinner();
 	} else if (playingField[randNum].textContent !== '') {
-		aiMove();
+		EasyAiMove();
 	}
 }
 
-function minimax_ai() {
-	let bestMove = None;
-	let bestScore = None;
+function makeMove(board, currentPlayer, position) {
+	board[position] = currentPlayer;
+	return board;
 }
 
-//Check winner
-function checkWinner() {
-	winConditions.forEach(condition => {
-		if (
-			['xxx', '○○○'].includes(
-				playingField[condition[0]].textContent +
-					playingField[condition[1]].textContent +
-					playingField[condition[2]].textContent
-			)
-		) {
-			let winner = playingField[condition[0]].textContent;
-			callEndGameModal(winner);
+function minimaxAi(board, currentPlayer) {
+	let bestMove = undefined;
+	let bestScore = undefined;
+
+	legalMoves = getLegalMoves(board);
+
+	legalMoves.forEach(legalMove => {
+		newBoard = makeMove(board, currentPlayer, legalMove);
+		opponet = getOpponent(currentPlayer);
+
+		score = minimax(opponent, newBoard);
+
+		board[legal_move] = '_';
+
+		if (bestScore === None || score > bestScore) {
+			bestScore = score + 1;
+			bestMove = legalMove;
 		}
 	});
+	return bestMove;
 }
+
+function minimax(board, currentPlayer) {
+	legalMoves = getLegalMoves(board);
+
+	if (checkWinner(board) !== 0) {
+		return checkWinner(board);
+	}
+
+	if (legalMoves.length === 0) {
+		console.log(`Here is the length of legal moves: ${legalMoves.length}`);
+		return 0;
+	}
+
+	scores = [];
+
+	legalMoves.forEach(legalMove => {
+		newBoard = makeMove(board, currentPlayer, legalMove);
+		// printBoard(newBoard);
+		opponet = getOpponent(currentPlayer);
+		score = minimax(newBoard, opponet);
+		scores.push(score);
+		board[legalMove] = '_';
+	});
+	if (currentPlayer === opponent) {
+		return Math.max(...scores);
+	} else {
+		return Math.min(...scores);
+	}
+}
+
+// def minimax(board, current_player):
+//     legal_moves = get_legal_moves(board)
+
+//     if check_win(board) != 0:
+//         return check_win(board)
+
+//     if len(legal_moves) == 0:
+//         return 0
+
+//     scores = []
+
+//     for legal_move in legal_moves:
+//         new_board = make_move(board, current_player, legal_move)
+//         print_board(new_board)
+//         opponet = get_opponent(current_player)
+//         score = minimax(new_board, opponet)
+//         scores.append(score)
+//         board[legal_move] = "_"
+//     if current_player == ai:
+//         return max(scores)
+//     else:
+//         return min(scores)
+
+//Check winner
+// function checkWinner() {
+// 	winConditions.forEach(condition => {
+// 		if (
+// 			['xxx', '○○○'].includes(
+// 				playingField[condition[0]].textContent +
+// 					playingField[condition[1]].textContent +
+// 					playingField[condition[2]].textContent
+// 			)
+// 		) {
+// 			let winner = playingField[condition[0]].textContent;
+// 			callEndGameModal(winner);
+// 		}
+// 	});
+// }
+
+// def check_win(board):
+//     for condition in win_conditions:
+//         if board[condition[0]] + board[condition[1]] + board[condition[2]] == ai * 3:
+//             return 10
+//         elif (
+//             board[condition[0]] + board[condition[1]] + board[condition[2]]
+//             == hu_player * 3
+//         ):
+//             return -10
+//     return 0
 
 //Handle Game Over
 function callEndGameModal(winner) {
