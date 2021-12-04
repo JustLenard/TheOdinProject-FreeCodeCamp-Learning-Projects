@@ -33,7 +33,7 @@ function updateInternalBoard(internalBoard) {
 	// console.log(internalBoard);
 
 	for (var i = 0; i < 9; i++) {
-		console.log(playingField[i].textContent);
+		// console.log(playingField[i].textContent);
 		if (playingField[i].textContent === '') {
 			internalBoard[i] = '_';
 		} else {
@@ -75,7 +75,7 @@ function getLegalMoves(board) {
 		}
 	}
 	// console.log(legalMoves);
-	// console.log(`First legal moves ${legalMoves.length}`);
+	// console.log(`Here are the legal moves ${legalMoves}`);
 
 	return legalMoves;
 }
@@ -85,22 +85,32 @@ function getLegalMoves(board) {
 
 function checkWinner(board, currentPlayer) {
 	opp = getOpponent(currentPlayer);
+	// console.log(opp);
+	let score = 0;
 	winConditions.forEach(condition => {
+		// console.log(condition[0]);
+
 		if (
 			board[condition[0]] + board[condition[1]] + board[condition[2]] ===
 			opp + opp + opp
 		) {
-			return 10;
-		}
-		if (
+			score = 10;
+			// console.log('yo');
+			// return 10;
+		} else if (
 			board[condition[0]] + board[condition[1]] + board[condition[2]] ===
 			player + player + player
 		) {
-			return -10;
+			score = -10;
+			// console.log('I /have no fucking idea');
+			// return -10;
 		}
 	});
-	return 0;
+	// console.log('fucing finished the loop	');
+	return score;
 }
+
+// console.log(checkWinner(['○', '○', '○', '_', '_', '_', '_', '_', '_']));
 
 //Player move
 playingField.forEach(choice => {
@@ -114,7 +124,8 @@ playingField.forEach(choice => {
 			choice.textContent = player;
 			updateInternalBoard(internalBoard);
 			printBoard(internalBoard);
-			playingField[minimaxAi(internalBoard, opponent)].textContent = opponent;
+			aiMove = minimaxAi(internalBoard, opponent);
+			playingField[aiMove].textContent = opponent;
 			updateInternalBoard(internalBoard);
 
 			printBoard(internalBoard);
@@ -143,11 +154,10 @@ playingField.forEach(choice => {
 // Find who is the opponent
 function getOpponent(currentPlayer) {
 	if (currentPlayer === player) {
-		opponent = '○';
+		return opponent;
 	} else if (currentPlayer === opponent) {
-		opponent = 'x';
+		return player;
 	}
-	return opponent;
 }
 
 //Ai logic Easy
@@ -184,7 +194,6 @@ function minimaxAi(board, currentPlayer) {
 		opponet = getOpponent(currentPlayer);
 
 		score = minimax(newBoard, opponet);
-
 		board[legalMove] = '_';
 
 		if (bestScore === undefined || score > bestScore) {
@@ -214,8 +223,12 @@ function minimax(board, currentPlayer) {
 		newBoard = makeMove(board, currentPlayer, legalMove);
 		// printBoard(newBoard);
 		opponet = getOpponent(currentPlayer);
+		// console.log(opponet);
 		score = minimax(newBoard, opponet);
 		scores.push(score);
+		// if (score !== 0) {
+		// 	console.log(score);
+		// }
 		board[legalMove] = '_';
 	});
 	if (currentPlayer === opponent) {
