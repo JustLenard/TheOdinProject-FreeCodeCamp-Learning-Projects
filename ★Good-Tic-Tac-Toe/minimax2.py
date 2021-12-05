@@ -128,5 +128,7 @@ def player_input(board):
 
 player_input(board)
 
-# Ok, so for the most part everything works. Thou this can definitelly be worked on. At the moment you can't change the between 'x' and 'o', and there is probably some
-# bugs somewhere, but I didn't inted for this to be perfect, just a rough sketch so that it will be easier for me to do it in JS. I will do the polishing there.
+# Ok, so for the most part everything works. Thou this can definitelly be worked on. 
+# At the moment you can't change the between 'x' and 'o', and there is probably some
+# bugs somewhere, but I didn't inted for this to be perfect, just a rough sketch so 
+# that it will be easier for me to do it in JS. I will do the polishing there.

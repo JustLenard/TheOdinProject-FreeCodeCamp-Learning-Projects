@@ -112,7 +112,6 @@ playingField.forEach(choice => {
 			choice.classList.remove('active');
 		});
 		if (choice.textContent === '') {
-			xCounter++;
 			choice.classList.add('active');
 			choice.textContent = player;
 			updateInternalBoard(internalBoard);
@@ -121,6 +120,7 @@ playingField.forEach(choice => {
 			console.log(`The best move is ${aiMove}`);
 			playingField[aiMove].textContent = ai;
 			updateInternalBoard(internalBoard);
+			printBoard(internalBoard);
 		}
 	});
 });
@@ -166,11 +166,11 @@ function minimaxAi(board, currentPlayer) {
 	legalMoves.forEach(legalMove => {
 		newBoard = makeMove(board, currentPlayer, legalMove);
 		opponet = getOpponent(currentPlayer);
-
-		// printBoard(newBoard);
+		console.log(`Bellow is the board within minimaxAi`);
+		printBoard(newBoard);
 		score = minimax(newBoard, opponet);
-		// console.log(`The new score for the current board: ${score}`);
-
+		console.log(`The score within minimaxAi board is this: ${score}`);
+		console.log(`Also, initiated minimax with the opponet being ${opponet}`);
 		board[legalMove] = '_';
 
 		if (bestScore === undefined || score > bestScore) {
@@ -186,24 +186,38 @@ function minimax(board, currentPlayer) {
 	legalMoves = getLegalMoves(board);
 	// console.log(legalMoves.length);
 	// console.log(`Here is the length of legal moves: ${legalMoves.length}`);
-
-	if (checkWinner(board) !== 0) {
+	winnerScore = checkWinner(board);
+	console.log('Reached minimax');
+	// console.log(`Here is legalMoves ${legalMoves}`);
+	// console.log(`Here is winnerScore ${winnerScore}`);
+	if (winnerScore !== 0) {
 		return checkWinner(board);
 	}
+	// console.log(
+	// 	`If winnerScore ${winnerScore} is not 0 , this message will not be shhown`
+	// );
 
 	if (legalMoves.length === 0) {
 		// console.log(`Here is the length of legal moves: ${legalMoves.length}`);
 		return 0;
 	}
+	// console.log(
+	// 	`Ok, so if there is no legalmoves left, you should not reach here. THe number is ${legalMoves.length}`
+	// );
 
 	scores = [];
 
 	legalMoves.forEach(legalMove => {
 		newBoard = makeMove(board, currentPlayer, legalMove);
-		// printBoard(newBoard);
+		console.log(
+			`Bellow is minimax newBoard with currentplayer being ${currentPlayer}`
+		);
+		printBoard(newBoard);
 		opponet = getOpponent(currentPlayer);
 		// console.log(opponet);
+		console.log(`calling minimax in minimax with new opponent ${opponet}`);
 		score = minimax(newBoard, opponet);
+		console.log(`Score in minimax recoursed ${score}`);
 
 		// console.log(`The new score for the current board: ${score}`);
 		// printBoard(newBoard);
@@ -215,62 +229,32 @@ function minimax(board, currentPlayer) {
 		// console.log(score);
 		board[legalMove] = '_';
 	});
+	console.log(`The currentPlayer is ${currentPlayer} and scores is ${scores}`);
 	if (currentPlayer === ai) {
+		console.log(
+			`Current player is ${currentPlayer} so I will be maximazing from ${scores} and that will be ${Math.max(
+				...scores
+			)}`
+		);
 		return Math.max(...scores);
 	} else {
+		console.log(
+			`Current player is ${currentPlayer} so I will be minimazing from ${scores} and that will be ${Math.min(
+				...scores
+			)}`
+		);
 		return Math.min(...scores);
 	}
 }
-
-// def minimax(board, current_player):
-//     legal_moves = get_legal_moves(board)
-
-//     if check_win(board) != 0:
-//         return check_win(board)
-
-//     if len(legal_moves) == 0:
-//         return 0
-
-//     scores = []
-
-//     for legal_move in legal_moves:
-//         new_board = make_move(board, current_player, legal_move)
-//         print_board(new_board)
-//         opponet = get_opponent(current_player)
-//         score = minimax(new_board, opponet)
-//         scores.append(score)
-//         board[legal_move] = "_"
-//     if current_player == ai:
-//         return max(scores)
-//     else:
-//         return min(scores)
-
-//Check winner
-// function checkWinner() {
-// 	winConditions.forEach(condition => {
-// 		if (
-// 			['xxx', '○○○'].includes(
-// 				playingField[condition[0]].textContent +
-// 					playingField[condition[1]].textContent +
-// 					playingField[condition[2]].textContent
-// 			)
-// 		) {
-// 			let winner = playingField[condition[0]].textContent;
-// 			callEndGameModal(winner);
-// 		}
-// 	});
-// }
-
-// def check_win(board):
-//     for condition in win_conditions:
-//         if board[condition[0]] + board[condition[1]] + board[condition[2]] == ai * 3:
-//             return 10
-//         elif (
-//             board[condition[0]] + board[condition[1]] + board[condition[2]]
-//             == hu_player * 3
-//         ):
-//             return -10
-//     return 0
+fucking = [2, 3, 4, 4];
+console.log(fucking);
+fucking.push(-32);
+console.log(fucking);
+board = ['f', '_', 'x', '○', '_', '○', '_', '_', '_'];
+printBoard(board);
+console.log('        ');
+theMove = minimaxAi(board, ai);
+console.log(theMove);
 
 //Handle Game Over
 function callEndGameModal(winner) {
