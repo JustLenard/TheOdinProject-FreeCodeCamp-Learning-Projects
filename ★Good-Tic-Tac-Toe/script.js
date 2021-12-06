@@ -81,7 +81,7 @@ function getLegalMoves(board) {
 
 function checkWinner(board) {
 	// console.log(opp);
-	let score = 0;
+	var points = 0;
 	winConditions.forEach(condition => {
 		// console.log(condition[0]);
 
@@ -89,17 +89,17 @@ function checkWinner(board) {
 			board[condition[0]] + board[condition[1]] + board[condition[2]] ===
 			ai + ai + ai
 		) {
-			score = 10;
+			points = 10;
 		} else if (
 			board[condition[0]] + board[condition[1]] + board[condition[2]] ===
 			player + player + player
 		) {
-			score = -10;
+			points = -10;
 		}
 	});
 	// console.log('fucing finished the loop	');
-	// console.log(score);
-	return score;
+	// console.log(points);
+	return points;
 }
 
 // console.log(checkWinner(['○', '○', '○', '_', '_', '_', '_', '_', '_']));
@@ -115,7 +115,7 @@ playingField.forEach(choice => {
 			choice.classList.add('active');
 			choice.textContent = player;
 			updateInternalBoard(internalBoard);
-			// printBoard(internalBoard);
+			printBoard(internalBoard);
 			aiMove = minimaxAi(internalBoard, ai);
 			console.log(`The best move is ${aiMove}`);
 			playingField[aiMove].textContent = ai;
@@ -160,25 +160,34 @@ function makeMove(board, currentPlayer, position) {
 function minimaxAi(board, currentPlayer) {
 	let bestMove = undefined;
 	let bestScore = undefined;
-
+	v = 0;
 	legalMoves = getLegalMoves(board);
 	// console.log(`this is legal Moves in minimax ${legalMoves}`);
 	legalMoves.forEach(legalMove => {
 		newBoard = makeMove(board, currentPlayer, legalMove);
 		opponet = getOpponent(currentPlayer);
-		console.log(`Bellow is the board within minimaxAi`);
-		printBoard(newBoard);
 		score = minimax(newBoard, opponet);
-		console.log(`The score within minimaxAi board is this: ${score}`);
-		console.log(`Also, initiated minimax with the opponet being ${opponet}`);
+		// console.log(`Bellow is the board within minimaxAi`);
+		// printBoard(newBoard);
+		// console.log(`The score within minimaxAi board is this: ${score}`);
+		v++;
+		// if (v === 1) {
+		// 	console.log('FULL STOP HERE ');
+		// 	console.log('YOU SHALLL NOT PASSS --------');
+		// }
+
+		// console.log(`Also, initiated minimax with the opponet being ${opponet}`);
 		board[legalMove] = '_';
 
 		if (bestScore === undefined || score > bestScore) {
 			bestScore = score;
 			bestMove = legalMove;
+			// console.log(
+			// 	`Best score is ${bestScore} while score is ${score} so I am changing them. Best move is ${bestMove}`
+			// );
 		}
 	});
-	console.log(`The best move is ${bestMove} with a score of ${bestScore}`);
+	// console.log(`The best move is ${bestMove} with a score of ${bestScore}`);
 	return bestMove;
 }
 
@@ -187,7 +196,7 @@ function minimax(board, currentPlayer) {
 	// console.log(legalMoves.length);
 	// console.log(`Here is the length of legal moves: ${legalMoves.length}`);
 	winnerScore = checkWinner(board);
-	console.log('Reached minimax');
+	// console.log('Reached minimax');
 	// console.log(`Here is legalMoves ${legalMoves}`);
 	// console.log(`Here is winnerScore ${winnerScore}`);
 	if (winnerScore !== 0) {
@@ -199,25 +208,28 @@ function minimax(board, currentPlayer) {
 
 	if (legalMoves.length === 0) {
 		// console.log(`Here is the length of legal moves: ${legalMoves.length}`);
+		// console.log('I am going to push 0 into scores');
 		return 0;
 	}
 	// console.log(
 	// 	`Ok, so if there is no legalmoves left, you should not reach here. THe number is ${legalMoves.length}`
 	// );
 
-	scores = [];
+	var scores = [];
 
 	legalMoves.forEach(legalMove => {
 		newBoard = makeMove(board, currentPlayer, legalMove);
-		console.log(
-			`Bellow is minimax newBoard with currentplayer being ${currentPlayer}`
-		);
-		printBoard(newBoard);
+		// console.log(
+		// 	`Bellow is minimax newBoard with currentplayer being ${currentPlayer} and move is ${legalMove}`
+		// );
 		opponet = getOpponent(currentPlayer);
 		// console.log(opponet);
-		console.log(`calling minimax in minimax with new opponent ${opponet}`);
+		// console.log(`calling minimax in minimax with new opponent ${opponet}`);
+		// printBoard(newBoard);
+
 		score = minimax(newBoard, opponet);
-		console.log(`Score in minimax recoursed ${score}`);
+		// console.log(`Score in minimax for table above: ${score}`);
+		// console.log(`Score in minimax recoursed ${score}`);
 
 		// console.log(`The new score for the current board: ${score}`);
 		// printBoard(newBoard);
@@ -225,36 +237,38 @@ function minimax(board, currentPlayer) {
 		// console.log(
 		// 	`Here is currentPlayer: ${currentPlayer} and scores: ${scores}`
 		// );
+
 		scores.push(score);
+		// console.log(`I am pushed ${score} into ${scores}`);
 		// console.log(score);
 		board[legalMove] = '_';
 	});
-	console.log(`The currentPlayer is ${currentPlayer} and scores is ${scores}`);
-	if (currentPlayer === ai) {
-		console.log(
-			`Current player is ${currentPlayer} so I will be maximazing from ${scores} and that will be ${Math.max(
-				...scores
-			)}`
-		);
-		return Math.max(...scores);
-	} else {
-		console.log(
-			`Current player is ${currentPlayer} so I will be minimazing from ${scores} and that will be ${Math.min(
-				...scores
-			)}`
-		);
+	// console.log(`The currentPlayer is ${currentPlayer} and scores is ${scores}`);
+	if (currentPlayer === player) {
+		// console.log(
+		// 	`Current player is ${currentPlayer} so I will be maximazing from ${scores} and that will be ${Math.max(
+		// 		...scores
+		// 	)}`
+		// );
 		return Math.min(...scores);
+	} else {
+		// console.log(
+		// 	`Current player is ${currentPlayer} so I will be minimazing from ${scores} and that will be ${Math.min(
+		// 		...scores
+		// 	)}`
+		// );
+		return Math.max(...scores);
 	}
 }
-fucking = [2, 3, 4, 4];
-console.log(fucking);
-fucking.push(-32);
-console.log(fucking);
-board = ['f', '_', 'x', '○', '_', '○', '_', '_', '_'];
-printBoard(board);
-console.log('        ');
-theMove = minimaxAi(board, ai);
-console.log(theMove);
+// fucking = [0];
+// console.log(fucking);
+// fucking.push(0);
+// console.log(fucking);
+// board = ['f', '_', 'f', '○', '_', '○', '_', 'f', 'f_'];
+// printBoard(board);
+// console.log('        ');
+// theMove = minimaxAi(board, ai);
+// console.log(theMove);
 
 //Handle Game Over
 function callEndGameModal(winner) {
