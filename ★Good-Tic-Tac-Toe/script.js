@@ -15,35 +15,24 @@ const winConditions = [
 	[6, 4, 2],
 ];
 
-var xCounter = 0;
 var player = 'x';
 var ai = '○';
 const internalBoard = ['_', '_', '_', '_', '_', '_', '_', '_', '_'];
 
-function printBoard(internalBoard) {
-	console.log(internalBoard.slice(0, 3));
-	console.log(internalBoard.slice(3, 6));
-	console.log(internalBoard.slice(6, 9));
-}
+// function printBoard(internalBoard) {
+// 	console.log(internalBoard.slice(0, 3));
+// 	console.log(internalBoard.slice(3, 6));
+// 	console.log(internalBoard.slice(6, 9));
+// }
 
-//Update the internal board for AI to work with
-function updateInternalBoard(internalBoard) {
-	for (var i = 0; i < 9; i++) {
-		if (playingField[i].textContent === '') {
-			internalBoard[i] = '_';
-		} else {
-			internalBoard[i] = playingField[i].textContent;
-		}
-	}
-}
-
-//Difficulty choice
+//Difficulty choice (just the visual part)
 dificultyChoices.forEach(choice => {
 	choice.addEventListener('click', () => {
 		dificultyChoices.forEach(choice => {
 			choice.classList.remove('active');
 		});
 		choice.classList.add('active');
+		restart();
 	});
 });
 
@@ -56,82 +45,54 @@ markerChoices.forEach(choice => {
 		choice.classList.add('active');
 		player = choice.textContent;
 		ai = getOpponent(player);
-		console.log(player);
 		restart();
 	});
 });
 
-// Get all the legal moves
-function getLegalMoves(board) {
-	legalMoves = [];
-	for (var i = 0; i < 9; i++) {
-		if (board[i] === '_') {
-			legalMoves.push(i);
-		}
-	}
-	return legalMoves;
-}
-
-function checkWinner(board) {
-	var points = 0;
-	winConditions.forEach(condition => {
-		if (
-			board[condition[0]] + board[condition[1]] + board[condition[2]] ===
-			ai + ai + ai
-		) {
-			points = 10;
-		} else if (
-			board[condition[0]] + board[condition[1]] + board[condition[2]] ===
-			player + player + player
-		) {
-			points = -10;
-		}
-	});
-	return points;
-}
-
 //Player move
-playingField.forEach(choice => {
-	choice.addEventListener('click', () => {
-		playingField.forEach(choice => {
-			choice.classList.remove('active');
+playingField.forEach(emptySqaure => {
+	emptySqaure.addEventListener('click', () => {
+		playingField.forEach(emptySqaure => {
+			emptySqaure.classList.remove('active');
 		});
-		if (choice.textContent === '') {
-			choice.classList.add('active');
-			choice.textContent = player;
-			updateInternalBoard(internalBoard);
-			// aiMove = minimaxAi(internalBoard, ai);
-			// playingField[minim/xAi(internalBoard, ai)].textContent = ai;
-			easyAiMove();
-			updateInternalBoard(internalBoard);
-			// printBoard(internalBoard);
+		if (emptySqaure.textContent === '') {
+			emptySqaure.classList.add('active');
+			emptySqaure.textContent = player;
+			checkEndGame(internalBoard);
+			if (getLegalMoves(internalBoard).length !== 0) {
+				aiMove = useCorrectAiDifficulty();
+				playingField[aiMove].textContent = ai;
+				checkEndGame(internalBoard);
+			}
 		}
 	});
 });
 
-// Find who is the opponent
-function getOpponent(currentPlayer) {
-	if (currentPlayer === '○') {
-		return 'x';
-	} else if (currentPlayer === 'x') {
-		return '○';
+// Get the ai with the correct dificulty
+function useCorrectAiDifficulty() {
+	if (dificultyChoices[0].classList.contains('active')) {
+		return easyAi();
+	} else if (dificultyChoices[1].classList.contains('active')) {
+		return normalAi(internalBoard, ai);
+	} else if (dificultyChoices[2].classList.contains('active')) {
+		return minimaxAi(internalBoard, ai);
 	}
 }
 
 // Easy Ai
-function easyAiMove() {
-	updateInternalBoard(internalBoard);
-	console.log(internalBoard);
+function easyAi() {
 	legalMoves = getLegalMoves(internalBoard);
-	console.log(legalMoves);
 	let randNum = randomNumber(legalMoves.length);
-	console.log(randNum);
-	playingField[legalMoves[randNum]].textContent = ai;
+	return legalMoves[randNum];
 }
 
-function makeMove(board, currentPlayer, position) {
-	board[position] = currentPlayer;
-	return board;
+// Normal Ai
+function normalAi(board, currentPlayer) {
+	if (randomNumber(10) > 3) {
+		return minimaxAi(board, currentPlayer);
+	} else {
+		return easyAi();
+	}
 }
 
 // Impossible Ai
@@ -180,10 +141,82 @@ function minimax(board, currentPlayer) {
 	}
 }
 
+//Update the internal board for AI to work with
+function updateInternalBoard(internalBoard) {
+	for (var i = 0; i < 9; i++) {
+		if (playingField[i].textContent === '') {
+			internalBoard[i] = '_';
+		} else {
+			internalBoard[i] = playingField[i].textContent;
+		}
+	}
+}
+
+// Get all the legal moves
+function getLegalMoves(board) {
+	legalMoves = [];
+	for (let i = 0; i < 9; i++) {
+		if (board[i] === '_') {
+			legalMoves.push(i);
+		}
+	}
+	return legalMoves;
+}
+
+function makeMove(board, currentPlayer, position) {
+	board[position] = currentPlayer;
+	return board;
+}
+
+// Find who is the opponent
+function getOpponent(currentPlayer) {
+	if (currentPlayer === '○') {
+		return 'x';
+	} else if (currentPlayer === 'x') {
+		return '○';
+	}
+}
+
+// Look for winner
+function checkWinner(board) {
+	let points = 0;
+	winConditions.forEach(condition => {
+		if (
+			board[condition[0]] + board[condition[1]] + board[condition[2]] ===
+			ai + ai + ai
+		) {
+			points = 10;
+		} else if (
+			board[condition[0]] + board[condition[1]] + board[condition[2]] ===
+			player + player + player
+		) {
+			points = -10;
+		}
+	});
+	return points;
+}
+
+//Check for end game
+function checkEndGame(board) {
+	updateInternalBoard(internalBoard);
+	if (checkWinner(board) !== 0) {
+		if (checkWinner(board) === 10) {
+			callEndGameModal(ai);
+		} else {
+			callEndGameModal(player);
+		}
+	} else if (getLegalMoves(board).length === 0) {
+		callEndGameModal('tie');
+	}
+}
+
 //Handle Game Over
 function callEndGameModal(winner) {
-	winningMessage.textContent = `The winner is ${winner}`;
-	console.log(`The winner is ${winner}`);
+	if (winner === 'tie') {
+		winningMessage.textContent = `The game is a Tie`;
+	} else {
+		winningMessage.textContent = `The winner is ${winner}`;
+	}
 	endGameModal.classList.add('show');
 }
 
