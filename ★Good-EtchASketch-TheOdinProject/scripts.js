@@ -98,3 +98,7 @@ reset.addEventListener('click', () => {
 function rn() {
 	return Math.floor(Math.random() * 256 + 1);
 }
+
+//1. Add default pen when you open for the first time
+//2. Add 'active' clas to see what pen is selected
+//3. Unfuck the pixel size

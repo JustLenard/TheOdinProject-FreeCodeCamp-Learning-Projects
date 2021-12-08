@@ -7,7 +7,7 @@ $header-footer: rgb(59, 57, 57)
 
 
 body
-    background: rgb(61, 60, 60)
+    background: rgb(107, 93, 93)
     display: flex
     flex-direction: column
     justify-content: space-between
@@ -24,27 +24,42 @@ body
     align-items: center
     justify-content: space-between
 
-h1
+.title
+    text-align: center
     font-size: 3.5rem
-    margin: 2rem auto 0 auto
     background: $header-footer
+    padding: 2rem
     color: silver
 
-.options
-    display: flex
-    justify-content: space-between
-    margin: 1rem auto
 
-.f
+.options
+    width: 250px
+    display: flex
+    gap: 5rem
+    justify-content: center
+    align-items: center
+    margin-top: 2rem
+    
+
+.dificulty-text, .marker-text
     display: flex
     justify-content: center
+    font-size: 1.5rem
+    font-weight: bold
     
-.dificulty-choices, .marker-choices
+.dificulty-box , .marker-box
     display: flex
+    flex-direction: column
+    // justify-content: space-between
+    gap: 1rem
+    align-items: center
+    
+
+.marker-choices
+    display: flex
+    gap: 1.5rem
     justify-content: space-between
-    align-content: center
-    margin: 1rem auto
-        
+
 
 .playing-field
     box-sizing: border-box
@@ -65,6 +80,51 @@ h1
         font-size: 4rem
     div:hover
         cursor: pointer
+
+
+.restart
+    position: relative
+    overflow: hidden
+    cursor: pointer
+    display: inline-flex
+    height: 40px
+    width: 150px
+    border: 2px solid #BFC0C0
+    margin: 20px
+    color: #BFC0C0
+    text-transform: uppercase
+    text-decoration: none
+    font-size: .8em
+    letter-spacing: 1.5px
+    align-items: center
+    justify-content: center
+    overflow: hidden
+
+.text
+    position: relative
+    transition: all .45s ease-Out
+    
+#circle
+    width: 0%
+    height: 0%
+    opacity: 0
+    line-height: 40px
+    border-radius: 50%
+    background: #BFC0C0
+    position: absolute
+    transition: all .5s ease-Out
+    top: 20px
+    left: 70px
+
+.restart:hover #circle
+    width: 200%
+    height: 500%
+    opacity: 1
+    top: -70px
+    left: -70px
+
+.restart:hover .text
+    color: red
 
 
 .active

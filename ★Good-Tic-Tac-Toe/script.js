@@ -1,4 +1,4 @@
-const dificultyChoices = document.querySelectorAll('[data-dificutly]');
+const dificultyChoices = document.querySelector('#dropdown-options');
 const markerChoices = document.querySelectorAll('[data-marker]');
 const playingField = document.querySelectorAll('[data-position]');
 const restartBtn = document.querySelectorAll('.restart');
@@ -14,24 +14,18 @@ const winConditions = [
 	[0, 4, 8],
 	[6, 4, 2],
 ];
-
 var player = 'x';
 var ai = '○';
 const internalBoard = ['_', '_', '_', '_', '_', '_', '_', '_', '_'];
 
-// function printBoard(internalBoard) {
-// 	console.log(internalBoard.slice(0, 3));
-// 	console.log(internalBoard.slice(3, 6));
-// 	console.log(internalBoard.slice(6, 9));
-// }
+// Restarts the game if dificutly is changed
+dificultyChoices.addEventListener('change', () => {
+	restart();
+});
 
-//Difficulty choice (just the visual part)
-dificultyChoices.forEach(choice => {
-	choice.addEventListener('click', () => {
-		dificultyChoices.forEach(choice => {
-			choice.classList.remove('active');
-		});
-		choice.classList.add('active');
+// Event listener for restart buttons
+restartBtn.forEach(button => {
+	button.addEventListener('click', () => {
 		restart();
 	});
 });
@@ -70,18 +64,18 @@ playingField.forEach(emptySqaure => {
 
 // Get the ai with the correct dificulty
 function useCorrectAiDifficulty() {
-	if (dificultyChoices[0].classList.contains('active')) {
+	if (dificultyChoices.value === 'easy') {
 		return easyAi();
-	} else if (dificultyChoices[1].classList.contains('active')) {
+	} else if (dificultyChoices.value === 'normal') {
 		return normalAi(internalBoard, ai);
-	} else if (dificultyChoices[2].classList.contains('active')) {
+	} else if (dificultyChoices.value === 'impossible') {
 		return minimaxAi(internalBoard, ai);
 	}
 }
 
 // Easy Ai
 function easyAi() {
-	legalMoves = getLegalMoves(internalBoard);
+	let legalMoves = getLegalMoves(internalBoard);
 	let randNum = randomNumber(legalMoves.length);
 	return legalMoves[randNum];
 }
@@ -99,7 +93,7 @@ function normalAi(board, currentPlayer) {
 function minimaxAi(board, currentPlayer) {
 	let bestMove = undefined;
 	let bestScore = undefined;
-	legalMoves = getLegalMoves(board);
+	let legalMoves = getLegalMoves(board);
 	legalMoves.forEach(legalMove => {
 		newBoard = makeMove(board, currentPlayer, legalMove);
 		opponet = getOpponent(currentPlayer);
@@ -115,8 +109,8 @@ function minimaxAi(board, currentPlayer) {
 }
 
 function minimax(board, currentPlayer) {
-	legalMoves = getLegalMoves(board);
-	winnerScore = checkWinner(board);
+	let legalMoves = getLegalMoves(board);
+	let winnerScore = checkWinner(board);
 	if (winnerScore !== 0) {
 		return checkWinner(board);
 	}
@@ -129,8 +123,7 @@ function minimax(board, currentPlayer) {
 	legalMoves.forEach(legalMove => {
 		newBoard = makeMove(board, currentPlayer, legalMove);
 		opponet = getOpponent(currentPlayer);
-		score = minimax(newBoard, opponet);
-
+		let score = minimax(newBoard, opponet);
 		scores.push(score);
 		board[legalMove] = '_';
 	});
@@ -154,7 +147,7 @@ function updateInternalBoard(internalBoard) {
 
 // Get all the legal moves
 function getLegalMoves(board) {
-	legalMoves = [];
+	let legalMoves = [];
 	for (let i = 0; i < 9; i++) {
 		if (board[i] === '_') {
 			legalMoves.push(i);
@@ -220,24 +213,16 @@ function callEndGameModal(winner) {
 	endGameModal.classList.add('show');
 }
 
-//Restart
-restart();
+// Restart function
 function restart() {
-	restartBtn.forEach(button => {
-		button.addEventListener('click', () => {
-			playingField.forEach(choice => {
-				choice.classList.remove('active');
-				choice.textContent = '';
-			});
-			xCounter = 0;
-			endGameModal.classList.remove('show');
-		});
-		xCounter = 0;
-		playingField.forEach(choice => {
-			choice.classList.remove('active');
-			choice.textContent = '';
-		});
+	playingField.forEach(emptySquare => {
+		emptySquare.classList.remove('active');
+		emptySquare.textContent = '';
 	});
+	endGameModal.classList.remove('show');
+	if (player !== 'x') {
+		playingField[randomNumber(9)].textContent = ai;
+	}
 }
 
 //Random number
