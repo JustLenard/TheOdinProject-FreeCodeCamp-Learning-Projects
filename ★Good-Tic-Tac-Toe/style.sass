@@ -1,4 +1,5 @@
 $header-footer: rgb(59, 57, 57)
+$silver: silver
     
 *
     box-sizing: border-box
@@ -7,7 +8,7 @@ $header-footer: rgb(59, 57, 57)
 
 
 body
-    background: rgb(107, 93, 93)
+    background: #4e4949
     display: flex
     flex-direction: column
     justify-content: space-between
@@ -23,6 +24,7 @@ body
     flex-direction: column
     align-items: center
     justify-content: space-between
+    background-color: #484848
 
 .title
     text-align: center
@@ -46,26 +48,41 @@ body
     justify-content: center
     font-size: 1.5rem
     font-weight: bold
+    border-bottom: 2px solid silver
     
 .dificulty-box , .marker-box
     display: flex
     flex-direction: column
-    // justify-content: space-between
     gap: 1rem
     align-items: center
     
 
 .marker-choices
     display: flex
-    gap: 1.5rem
     justify-content: space-between
+
+.marker
+    position: relative
+    overflow: hidden
+    cursor: pointer
+    display: inline-flex
+    height: 20px
+    width: 20px
+    border: 2px solid $silver
+    color: $silver
+    text-transform: uppercase
+    text-decoration: none
+    font-size: .8em
+    letter-spacing: 1.5px
+    align-items: center
+    justify-content: center
+    overflow: hidden
 
 
 .playing-field
     box-sizing: border-box
     width: 300px
     height: 300px
-    border: 2px solid black
     display: flex
     flex-wrap: wrap
     div
@@ -82,6 +99,48 @@ body
         cursor: pointer
 
 
+
+.fancy-button
+    position: relative
+    overflow: hidden
+    cursor: pointer
+    display: inline-flex
+    height: 25px
+    width: 40px
+    border: 2px solid $silver
+    margin: 0 1rem
+    color: $silver
+    text-decoration: none
+    font-size: 1rem
+    letter-spacing: 1.5px
+    align-items: center
+    justify-content: center
+    overflow: hidden
+
+    
+#circle
+    width: 0%
+    height: 0%
+    opacity: 0
+    line-height: 40px
+    border-radius: 50%
+    background: $silver
+    position: absolute
+    transition: all .5s ease-Out
+    top: 20px
+    left: 70px
+
+.fancy-button:hover #circle
+    width: 200%
+    height: 500%
+    opacity: 1   
+    top: -70px
+    left: -70px
+
+.fancy-button:hover 
+    color: red
+    transition: all .45s ease-Out
+
 .restart
     position: relative
     overflow: hidden
@@ -94,7 +153,7 @@ body
     color: #BFC0C0
     text-transform: uppercase
     text-decoration: none
-    font-size: .8em
+    font-size: 0.8rem
     letter-spacing: 1.5px
     align-items: center
     justify-content: center
@@ -128,7 +187,7 @@ body
 
 
 .active
-    background: red
+    filter: brightness(1.4)
 
     
 footer
@@ -153,8 +212,19 @@ footer
     font-size: 5rem
     color: silver
     gap: 2rem
+    // transition: all 5s ease-Out
+
     button
         font-size: 3rem
 
 .end-game-modal.show
     display: flex
+    // transition: all 5s ease-Out
+
+
+/*Ok, mostly done with the project. Left to do:
+    -The screen size adaptability (also minimum size)
+    -Some animation for the end game modal to see where the last move was made
+    -Playing field. Should I leave the squares or no?
+    
+    */

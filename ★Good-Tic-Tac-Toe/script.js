@@ -1,9 +1,9 @@
 const dificultyChoices = document.querySelector('#dropdown-options');
-const markerChoices = document.querySelectorAll('[data-marker]');
-const playingField = document.querySelectorAll('[data-position]');
+const markerChoices = document.querySelectorAll('.marker');
+const playingField = document.querySelectorAll('.position');
 const restartBtn = document.querySelectorAll('.restart');
 const endGameModal = document.querySelector('.end-game-modal');
-const winningMessage = document.querySelector('[data-winning-message-text]');
+const winningMessage = document.querySelector('.winning-message');
 const winConditions = [
 	[0, 1, 2],
 	[3, 4, 5],
@@ -15,7 +15,7 @@ const winConditions = [
 	[6, 4, 2],
 ];
 var player = 'x';
-var ai = '○';
+var ai = '○'; // This is actually HTML circle and not 'o' neither '0'
 const internalBoard = ['_', '_', '_', '_', '_', '_', '_', '_', '_'];
 
 // Restarts the game if dificutly is changed
@@ -30,14 +30,14 @@ restartBtn.forEach(button => {
 	});
 });
 
-//Marker choice
+//Marker choice ('○' or 'x')
 markerChoices.forEach(choice => {
 	choice.addEventListener('click', () => {
 		markerChoices.forEach(choice => {
 			choice.classList.remove('active');
 		});
 		choice.classList.add('active');
-		player = choice.textContent;
+		player = choice.textContent.normalize().replace(/\s/g, '');
 		ai = getOpponent(player);
 		restart();
 	});
@@ -62,7 +62,7 @@ playingField.forEach(emptySqaure => {
 	});
 });
 
-// Get the ai with the correct dificulty
+// Use the ai with the correct dificulty
 function useCorrectAiDifficulty() {
 	if (dificultyChoices.value === 'easy') {
 		return easyAi();
@@ -156,6 +156,7 @@ function getLegalMoves(board) {
 	return legalMoves;
 }
 
+// Let the ai make a move
 function makeMove(board, currentPlayer, position) {
 	board[position] = currentPlayer;
 	return board;
@@ -170,7 +171,7 @@ function getOpponent(currentPlayer) {
 	}
 }
 
-// Look for winner
+// Look for a winner in the interanl board for the ai to work with
 function checkWinner(board) {
 	let points = 0;
 	winConditions.forEach(condition => {
@@ -189,7 +190,7 @@ function checkWinner(board) {
 	return points;
 }
 
-//Check for end game
+//Check for end game (win, lose or tie) on the actual board
 function checkEndGame(board) {
 	updateInternalBoard(internalBoard);
 	if (checkWinner(board) !== 0) {

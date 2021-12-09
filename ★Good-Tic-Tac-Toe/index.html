@@ -26,8 +26,14 @@
 					<div class="marker-box">
 						<div class="marker-text">Marker</div>
 						<div class="marker-choices">
-							<button data-marker="x" class="marker active">x</button>
-							<button data-marker="o" class="marker">○</button>
+							<div class="fancy-button marker active">
+								x
+								<div id="circle"></div>
+							</div>
+							<div class="fancy-button marker">
+								○
+								<div id="circle"></div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -35,26 +41,26 @@
 			<main>
 				<div>
 					<div class="playing-field">
-						<div data-position="1"></div>
-						<div data-position="2"></div>
-						<div data-position="3"></div>
-						<div data-position="4"></div>
-						<div data-position="5"></div>
-						<div data-position="6"></div>
-						<div data-position="7"></div>
-						<div data-position="8"></div>
-						<div data-position="9"></div>
+						<div class="pos-1 position"></div>
+						<div class="pos-2 position"></div>
+						<div class="pos-3 position"></div>
+						<div class="pos-4 position"></div>
+						<div class="pos-5 position"></div>
+						<div class="pos-6 position"></div>
+						<div class="pos-7 position"></div>
+						<div class="pos-8 position"></div>
+						<div class="pos-9 position"></div>
 					</div>
 				</div>
 			</main>
-			<div class="restart">
+			<div class="fancy-button restart">
 				<div id="circle"></div>
-				<div class="text">Restart</div>
+				<div class="text">RESTART</div>
 			</div>
 		</div>
 		<div class="end-game-modal">
-			<div data-winning-message-text></div>
-			<div class="restart">
+			<div class="winning-message"></div>
+			<div class="fancy-button restart">
 				<div id="circle"></div>
 				<div class="text">Restart</div>
 			</div>

@@ -6,7 +6,7 @@
 }
 
 body {
-  background: #6b5d5d;
+  background: #4e4949;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -39,6 +39,7 @@ body {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  background-color: #484848;
 }
 
 .title {
@@ -73,6 +74,7 @@ body {
           justify-content: center;
   font-size: 1.5rem;
   font-weight: bold;
+  border-bottom: 2px solid silver;
 }
 
 .dificulty-box, .marker-box {
@@ -93,10 +95,33 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  gap: 1.5rem;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+}
+
+.marker {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  height: 20px;
+  width: 20px;
+  border: 2px solid silver;
+  color: silver;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: .8em;
+  letter-spacing: 1.5px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  overflow: hidden;
 }
 
 .playing-field {
@@ -104,7 +129,6 @@ body {
           box-sizing: border-box;
   width: 300px;
   height: 300px;
-  border: 2px solid black;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -135,6 +159,58 @@ body {
   cursor: pointer;
 }
 
+.fancy-button {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  height: 25px;
+  width: 40px;
+  border: 2px solid silver;
+  margin: 0 1rem;
+  color: silver;
+  text-decoration: none;
+  font-size: 1rem;
+  letter-spacing: 1.5px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  overflow: hidden;
+}
+
+#circle {
+  width: 0%;
+  height: 0%;
+  opacity: 0;
+  line-height: 40px;
+  border-radius: 50%;
+  background: silver;
+  position: absolute;
+  -webkit-transition: all .5s ease-Out;
+  transition: all .5s ease-Out;
+  top: 20px;
+  left: 70px;
+}
+
+.fancy-button:hover #circle {
+  width: 200%;
+  height: 500%;
+  opacity: 1;
+  top: -70px;
+  left: -70px;
+}
+
+.fancy-button:hover {
+  color: red;
+  -webkit-transition: all .45s ease-Out;
+  transition: all .45s ease-Out;
+}
+
 .restart {
   position: relative;
   overflow: hidden;
@@ -149,7 +225,7 @@ body {
   color: #BFC0C0;
   text-transform: uppercase;
   text-decoration: none;
-  font-size: .8em;
+  font-size: 0.8rem;
   letter-spacing: 1.5px;
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -193,7 +269,8 @@ body {
 }
 
 .active {
-  background: red;
+  -webkit-filter: brightness(1.4);
+          filter: brightness(1.4);
 }
 
 footer {
@@ -243,4 +320,11 @@ footer {
   display: -ms-flexbox;
   display: flex;
 }
+
+/*Ok, mostly done with the project. Left to do:
+    -The screen size adaptability (also minimum size)
+    -Some animation for the end game modal to see where the last move was made
+    -Playing field. Should I leave the squares or no?
+
+    */
 /*# sourceMappingURL=style.css.map */
