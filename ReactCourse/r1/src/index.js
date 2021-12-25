@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './componets/App';
+import './styles/global.css';
 
-const reactContentRoot = document.querySelector('#root');
-
-ReactDOM.render(<App />, reactContentRoot);
+ReactDOM.render(<App />, document.querySelector('#root'));
